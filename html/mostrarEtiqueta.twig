@@ -1,0 +1,112 @@
+{# empty Twig template #}
+<section>
+    <div class="contentInterno">
+        <div class="contenedor">
+            <p class="ubicacion"><a href="[[paths.PATH_HOME]][% if(localhost) %]?language=[[ lang ]][% else %][[ lang ]][% endif %]">[[ texts.inicio ]]</a>|<span class="seccion">[[texts.etiqueta]]</span>|<span class="seccion">[[nombreEtiqueta]]</span></p>
+            {#-- empieza NOTICIAS --#}
+            [% if(cantNoticias > 0) %]
+            <div class="divNoticias">
+                <h3>Noticias</h3>
+                [% for datoNoticia in noticias %]
+                <div class="unidadIndiceNoticia">
+                    <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=noticia&nombreNoticiaUrl=[[ datoNoticia.nombreNoticiaUrl ]]&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/noticia/[[ datoNoticia.nombreNoticiaUrl ]][% endif %]">
+                        <img alt="[[ datoNoticia.tituloNoticia ]]" src="[[ paths.PATH_IMAGES_COMUNICACIONES ]][[ datoNoticia.imagenNoticia ]]">
+                        <div class="textoIndiceNoticias">
+                            <span class="fecha">[[ datoNoticia.fechaNoticia|date('d/m/Y') ]]</span>
+                            <h2>
+                                [% autoescape false %]
+                                [[ datoNoticia.tituloNoticia ]]
+                                [% endautoescape %]
+                            </h2>
+                            <p>
+                                [% autoescape false %]
+                                [[ datoNoticia.descripcionNoticia ]]
+                                [% endautoescape %]
+                            </p>
+                                    {#<p>[[ datoNota.cuerpoNotaPrensa ]]</p>#}
+
+                        </div>
+                    </a>  
+                    <div class="clear"></div>
+                </div>
+                [% endfor %]
+            </div>
+            [% endif %]
+            [% if(cantNotas > 0) %]
+            {#-- empieza NOTAS --#}
+            <div class="divNotas">
+                <h3>Notas</h3>
+                [% for datoNota in notas %]
+                <div class="unidadIndiceNoticia">
+                    <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=notaPrensa&notaPrensaUrl=[[ datoNota.notaPrensaUrl ]]&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/notaPrensa/[[ datoNota.notaPrensaUrl ]][% endif %]">
+                        <img alt="[[ datoNota.tituloNotaPrensa ]]" src="[[ paths.PATH_IMAGES_COMUNICACIONES ]][[ datoNota.imagenNotaPrensa ]]">
+                        <div class="textoIndiceNoticias">
+                            <span>[[ datoNota.fechaNotaPrensa|date('d/m/Y') ]]</span>
+                            <h2>
+                                [% autoescape false %]
+                                [[ datoNota.tituloNotaPrensa ]]
+                                [% endautoescape %]
+                            </h2>
+                            <p>
+                                [% autoescape false %]
+                                [[ datoNota.descripcionNotaPrensa ]]
+                                [% endautoescape %]
+                            </p>
+                                {#<p>[[ datoNota.cuerpoNotaPrensa ]]</p>#}
+                        </div>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+                [% endfor %]
+            </div>
+            [% endif %]
+
+            [% if(cantPosiciones > 0) %]
+            {#-- empieza POSICIONES --#}
+            <div class="divPosiciones">
+                <h3>Posiciones</h3>
+                <ul class="listaPDF">
+                    [% for datoPosicion in posiciones %]
+                    <li class="logItem itemListaPDF">
+                        {#<a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=posicion&nombrePosicionUrl=[[ datoPosicion.nombrePosicionUrl ]]&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/posicion/[[ datoPosicion.nombrePosicionUrl ]]/admin[% endif %]">#}
+                            <img alt="[[ datoPosicion.tituloPosicion ]]" src="[[ paths.PATH_IMAGES ]]tapaPdf.jpg">
+                            <div class="textoIndiceNoticias">
+                                <h2>
+                                    [% autoescape false %]
+                                    [[ datoPosicion.tituloPosicion ]]
+                                    [% endautoescape %]
+                                </h2>
+                                <a class="descargarPDF" href="[[ paths.PATH_IMAGES_COMUNICACIONES ]][[ datoPosicion.archivoPosicion ]]">[[texts.descargar]]</a>
+                            </div>
+                        {#</a>#}
+                    {#<p>[[ datoNota.cuerpoNotaPrensa ]]</p>#}
+                        </li>
+                        [% endfor %]
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+                [% endif %]
+
+                [% if(cantPublicaciones > 0) %]
+                {#-- empieza PUBLICACIONES --#}
+                <h3>Publicaciones</h3>
+                [% for datoPublicacion in publicaciones %]
+                <div class="unidadIndiceNoticia">
+                        {#<a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=publicacion&nombrePublicacionUrl=[[ datoPublicacion.nombrePublicacionUrl ]]&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/publicacion/[[ datoPublicacion.nombrePublicacionUrl ]][% endif %]">#}
+                        <img alt="[[ datoPublicacion.tituloPublicacionCanla ]]" src="[[ paths.PATH_IMAGES ]]tapaPdf.jpg">
+                        <div class="textoIndiceNoticias">
+                            <h2>
+                                [% autoescape false %]
+                                [[ datoPublicacion.tituloPublicacionCanla ]]
+                                [% endautoescape %]
+                            </h2>
+                            <a class="descargarPDF"  href="[[ paths.PATH_IMAGES_COMUNICACIONES ]][[ datoPublicacion.archivoPublicacionCanla ]]">[[texts.descargar]]</a>
+                        </div>
+                        {#</a>#}
+                        <div class="clear"></div>
+                    </div>
+                    [% endfor %]
+                    [% endif %]
+                </div>
+            </div>
+        </section>

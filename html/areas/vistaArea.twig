@@ -1,0 +1,52 @@
+
+<script type="text/javascript">
+    urlSubmit = '[[ paths.PATH_CONTROLLER_AREAS ]]controladorAdminModel.php?seccion=agregarArea&language=[[ lang ]]';
+    urlUploadImage = '[[ paths.PATH_PHP ]]upload.php?section=areas';
+    controladorModel = '[[ paths.PATH_CONTROLLER_AREAS ]]controladorAdminModel.php';
+    lang = '[[ lang ]]';
+    section = 'listadoAreas';
+    </script>
+
+    <section>
+        <div class="contentInterno">
+            <div class="contenedor">
+                <p class="ubicacion"><a href="[[paths.PATH_HOME]][% if(localhost) %]?language=[[ lang ]][% else %][[ lang ]][% endif %]">[[ texts.inicio ]]</a>|<span class="seccion">[% if(texts) %][[texts.areas_de_trabajo]][% else %]Áreas de trabajo[% endif %]</span>|<span class="seccion">Editar áreas</span></p>
+                <h2>Editar áreas</h2>
+
+                [% if(perfil == 1) %]
+                <div class="divBtnAgregar" ng-controller="modalDefault" ng-init="init('[[paths.PATH_CONTROLLER_AREAS]]controladorAdmin.php?seccion=agregarArea', 'imgController')">
+                    <a class="btn agregar" ng-click="open()" >Agregar Área</a>
+                </div>
+                [% endif %]
+
+                [% autoescape  false  %]
+
+                <div ng-controller="mainController" ng-init="init()" >
+                    <ul ui:sortable="sortableAreas" ng:model="dataArray">
+                        <li ng-repeat="data in dataArray track by data.idArea" class="logItem unidaddeContenido" id="item-{{data.idArea}}">
+                            <!--<img  class="fotoSecretariado" alt="{{data.nombreArea}}" src="[[ paths.PATH_IMAGES_AREAS ]]{{data.imagenArea}}">-->
+                            <h4><a class="vinculoArea" href="[% if (localhost) %][[paths.PATH_CONTROLLER_AREAS]]controladorAdmin.php?seccion=area&area={{data.nombreAreaUrl}}&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/area/{{data.nombreAreaUrl}}[% endif %]">{{data.nombreArea}}</a></h4>
+                            <!---<p>{{data.descripcionArea}}</p>-->
+                            <div class="clear"></div>
+                            [% if(perfil == 1) %]
+                            <div class="comboEliminarEditar">
+                                <div class="float marginR" ng-controller="mainController" >
+                                    <div class="success " ng-show="alertSuccess">{{alertSuccess}}</div>
+                                    <div class="error" ng-show="alertError">{{alertError}}</div>
+                                    <button class="btnOutline eliminar" type="button" ng-click="eliminarGenerico(data.idArea, '[[ paths.PATH_CONTROLLER_AREAS ]]controladorAdminModel.php', 'borrarArea', '¿Está seguro que desea borrar el área de trabajo?' )">Borrar</button>
+                                </div>
+                                <div class="float" ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_AREAS ]]controladorAdmin.php?seccion=modificarArea&idArea='+data.idArea+'&language=[[ lang ]]', 'imgController')">
+                                    <a class="btn editar" ng-click="open()">Editar</a>
+                                </div>
+                            </div>
+                            [% endif %]
+                        </li>
+                    </ul>
+                </div>
+
+                [% endautoescape %]
+
+            </div>
+        </div>
+    </section>
+

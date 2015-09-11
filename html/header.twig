@@ -1,0 +1,74 @@
+{# empty Twig template #}
+<header>
+    <div class="contenedor">
+        <div id="logo"><a href="[% if (localhost) %][[paths.PATH_HOME]]?language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]][% endif %]"><img src="[[ paths.PATH_IMAGES ]]logoCanLA.png" alt="CAN LA Climate Action Network"></a></div>
+        <h1><img src="[[ paths.PATH_IMAGES ]]can-la.png" alt="CAN LA Climate Action Network"></h1>
+
+        <div class="comboIdiomaSalir">
+            <a class="idioma" href="[% if (localhost) %][[paths.PATH_CONTROLLER]]usuarios/controladorAdmin.php?seccion=idioma&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/idioma[% endif %]">[% if(lang == "es") %]English[% else %]Spanish[% endif %]</a>
+            [% if(perfil == 1) %]
+                <a class="salir" href="[% if (localhost) %][[paths.PATH_CONTROLLER]]usuarios/controladorAdmin.php?seccion=logout&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/logout[% endif %]">Salir</a>
+            [% endif %]
+        </div>
+
+        <div class="clear"></div>
+        <!--Abre nav-->
+        <nav ng-controller="CollapseDemoCtrl" >
+            <ul class="menu" ng-click="isCollapsed = !isCollapsed">
+                <li><a>[% if(texts) %][[texts.sobre_canla]][% else %]Sobre CANLA[% endif %]</a></li>
+                <li><a>[% if(texts) %][[texts.areas_de_trabajo]][% else %]Área de trabajo[% endif %]</a></li>
+                <li><a>[% if(texts) %][[texts.comunicaciones]][% else %]Comunicaciones[% endif %]</a></li>
+                <li><a>[% if(texts) %][[texts.publicaciones]][% else %]Publicaciones[% endif %]</a></li>
+                <li><a class="sinMargen">[% if(texts) %][[texts.contacto]][% else %]Contacto[% endif %]</a></li>
+            </ul>
+            <div class="floaters" collapse="isCollapsed">
+                <ul>
+                    {#<li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_SOBRECANLA]]controladorAdmin.php?seccion=objetivos&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/sobrecanla/objetivos[% endif %]">[% if(texts) %][[texts.objetivos]][% else %]Objetivos, misión, visión[% endif %]</a></li>#}
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_SOBRECANLA]]controladorAdmin.php?seccion=reglamento&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/sobrecanla/reglamento[% endif %]">[% if(texts) %][[texts.reglamento]][% else %]Reglamento[% endif %]</a></li>
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_SOBRECANLA]]controladorAdmin.php?seccion=historia&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/sobrecanla/historia[% endif %]">[% if(texts) %][[texts.historia]][% else %]Historia[% endif %]</a></li>
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_SOBRECANLA]]controladorAdmin.php?seccion=secretariado&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/sobrecanla/secretariado[% endif %]">[% if(texts) %][[texts.secretariado]][% else %]Secretariado[% endif %]</a></li>
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_SOBRECANLA]]controladorAdmin.php?seccion=reporteAnual&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/sobrecanla/reporteAnual[% endif %]">[% if(texts) %][[texts.reporte_anual]][% else %]Reporte anual[% endif %]</a></li>
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_SOBRECANLA]]controladorAdmin.php?seccion=miembros&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/sobrecanla/miembros[% endif %]">[% if(texts) %][[texts.miembros]][% else %]Miembros[% endif %]</a></li>
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_SOBRECANLA]]controladorAdmin.php?seccion=canInternacional&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/sobrecanla/canInternacional[% endif %]">[% if(texts) %][[texts.can_internacional]][% else %]CAN internacional[% endif %]</a></li>
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_SOBRECANLA]]controladorAdmin.php?seccion=alianzas&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/sobrecanla/alianzas[% endif %]">[% if(texts) %][[texts.alianzas]][% else %]Alianzas[% endif %]</a></li>
+                </ul>
+                <ul>
+                    [% autoescape false %]
+                    [% for area in areas %]
+
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_AREAS]]controladorAdmin.php?seccion=area&area=[[ area.nombreAreaUrl ]]&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/area/[[ area.nombreAreaUrl ]][% endif %]">[[ area.nombreArea ]]</a></li>
+
+                    [% endfor %]
+                    [% endautoescape %]
+                    [% if(perfil == 1) %]
+                    <li><a class="nuevaArea" href="[% if (localhost) %][[paths.PATH_CONTROLLER_AREAS]]controladorAdmin.php?seccion=areas&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/areas/listado-areas[% endif %]">Editar áreas</a></li>
+                    [% endif %]
+                </ul>
+                <ul>
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=agenda&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/comunicaciones/agenda[% endif %]">[% if(texts) %][[texts.agenda]][% else %]Eventos[% endif %]</a></li>
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=noticias&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/comunicaciones/noticias[% endif %]">[% if(texts) %][[texts.noticias]][% else %]Noticias[% endif %]</a></li>
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=notas-de-prensa&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/comunicaciones/notas-de-prensa[% endif %]">[% if(texts) %][[texts.notas_de_prensa]][% else %]Notas de prensa[% endif %]</a></li>
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=posiciones&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/comunicaciones/posiciones[% endif %]">[% if(texts) %][[texts.posiciones]][% else %]Posiciones[% endif %]</a></li>
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=boletinCanla&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/comunicaciones/boletinCanla[% endif %]">[% if(texts) %][[texts.boletin]][% else %]Boletín CANLA[% endif %]</a> </li>
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=ecoEspanol&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/comunicaciones/ecoEspanol[% endif %]">[% if(texts) %][[texts.eco]][% else %]Eco en Español[% endif %]</a> </li>
+                </ul>
+                <ul>
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_PUBLICACIONES]]controladorAdmin.php?seccion=publicaciones&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/publicaciones/publicaciones[% endif %]">[% if(texts) %][[texts.publicaciones_canla]][% else %]Publicaciones CANLA[% endif %]</a></li>
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_PUBLICACIONES]]controladorAdmin.php?seccion=otrasPublicaciones&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/publicaciones/otrasPublicaciones[% endif %]">[% if(texts) %][[texts.otras_publicaciones]][% else %]Otras publicaciones[% endif %]</a></li>
+                </ul>
+               
+                <ul class="sinMargen">
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER]]contacto/controladorAdmin.php?seccion=contacto&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/contacto/contacto[% endif %]">[% if(texts) %][[texts.contacto]][% else %]Contacto[% endif %]</a></li>
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER]]contacto/controladorAdmin.php?seccion=nuevos-miembros&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/contacto/nuevos-miembros[% endif %]">[% if(texts) %][[texts.nuevos_miembros]][% else %]Nuevos miembros[% endif %]</a></li>
+                    <li><a href="[% if (localhost) %][[paths.PATH_CONTROLLER]]contacto/controladorAdmin.php?seccion=donaciones&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/contacto/donaciones[% endif %]">[% if(texts) %][[texts.donaciones]][% else %]Donaciones[% endif %]</a></li>
+                </ul>
+                <div class="clear"></div>
+            </div>
+        </nav>
+        <div class="redes">
+            <a href="https://www.youtube.com/channel/UCXkLxrGDoqSdhzFWqjYjADw/feed" target="_blank" class="youtube"><span>YouTube</span></a>
+            <a href="https://www.facebook.com/pages/CAN-Latinoamerica/607646545926338" target="_blank" class="facebook"><span>Facebook</span></a>
+            <a href="https://twitter.com/CAN_LA_" target="_blank" class="twitter"><span>Twitter</span></a>
+        </div>
+    </div>
+</header>

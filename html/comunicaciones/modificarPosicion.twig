@@ -1,0 +1,82 @@
+{# empty Twig template #}
+<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    id = [[datoPosicion.idPosicion]];
+    </script>
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h4 class="modal-title">Editar Posición</h4>
+        </div>
+        <div class="modal-body">
+            <form enctype="multipart/form-data" action="[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php?language=[[ lang ]]" method="post">
+                <table class="tablaModal">
+                    <tr>
+                        <td>Archivo:</td>
+                        <td>
+                            [% set id = datoPosicion.idPosicion %]
+                            <div ng-show="!subirImagen">
+                                [% if datoPosicion.archivoPosicion is defined and datoPosicion.archivoPosicion is not empty%]
+                                [% set archivoSubido = paths.PATH_IMAGES ~ "comunicaciones/" ~ datoPosicion.archivoPosicion %]
+                                <div class="minArchivoCargado">
+                                    <img class="thumb" src="[[paths.PATH_IMAGES]]tapaPdf.jpg"/>
+                                    <button type="button" ng-click="eliminarDinamico('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php?language=[[ lang ]]', formImagen)" class="eliminarChico eliminarFoto"></button>
+                                </div>
+                                <p>[[datoPosicion.archivoPosicion]]</p>
+                                <input type="hidden" ng-model="formImagen.id"  ng-init="formImagen.id = '[[id]]'"/>
+                                <input type="hidden" ng-model="formImagen.archivo"  ng-init="formImagen.archivo = '[[archivoSubido]]' "/>
+                                <input type="hidden" ng-model="formImagen.section" ng-init="formImagen.section = 'eliminarArchivoPosicion'"/>
+
+                                [% else %]
+                                <div ng-init="subirImagen = true"></div>
+                                [% endif%]
+                            </div>
+						{# INSERTAR MACRO DE IMAGENES #}
+                            <div ng-show="subirImagen">	
+                                [% import 'subirImagen.twig' as subirImagen%]
+                                [[ subirImagen.input(imagenSubida, idImagen, lang) ]]
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Título:</td>
+                        <td>
+                            <input type="hidden" ng-model="form.id"  ng-init="form.id = '[[id]]'"/>
+                            <input type="text" ng-model="form.tituloPosicion" ng-init="form.tituloPosicion = '[[datoPosicion.tituloPosicion]]' " name="tituloPosicion"  value="[[datoPosicion.tituloPosicion]]">
+                            <input type="hidden" ng-model="form.archivo" ng-init="form.archivo = '[[datoPosicion.archivoPosicion]]' "  name="archivo" >
+                            <input type="hidden" ng-model="form.section" ng-init="form.section = 'modificarPosicion' "  name="section" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Área:</td>
+                        <td>
+                            <select class="selectAdmin" ng-model="form.idArea" ng-init="form.idArea = '[[ datoPosicion.area.idArea ]]' " name="idArea">
+                                <option value="">Seleccione un Área</option>
+                                [% for datoArea in areas %]
+                                <option value="[[ datoArea.idArea ]]">[[ datoArea.nombreArea ]]</option>
+                                [% endfor %]
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Etiqueta:</td>
+                        <td>
+                            <div ng-init="fetchTags()">
+                                <tags-input ng-model="form.tags">
+                                    <auto-complete source="loadTags($query)"></auto-complete>
+                                </tags-input>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button"  class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+            <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+        </div>
+    </form>  		
+</div>

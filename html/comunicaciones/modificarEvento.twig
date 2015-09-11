@@ -1,0 +1,90 @@
+{# empty Twig template #}
+<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    id = [[datoEvento.idEvento]];
+    </script>
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h4 class="modal-title">Editar Evento</h4>
+        </div>
+        <div class="modal-body">
+            <form enctype="multipart/form-data" action="[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php?language=[[ lang ]]" method="post">
+                <table class="tablaModal">
+                    <tr>
+                        <td>Foto:</td>
+                        <td>
+                            [% set id = datoEvento.idEvento %]
+                            <div ng-show="!subirImagen">
+                                [% if datoEvento.imagenEvento is defined and datoEvento.imagenEvento is not empty%]
+                                [% set archivoSubido = paths.PATH_IMAGES ~ "comunicaciones/" ~ datoEvento.imagenEvento %]
+                                <div class="minArchivoCargado">
+                                    <img class="thumb" src="[[paths.PATH_IMAGES_COMUNICACIONES]][[ datoEvento.imagenEvento ]]"/>
+                                    <button type="button" ng-click="eliminarDinamico('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php?language=[[ lang ]]', formImagen)" class="eliminarChico eliminarFoto"></button>
+                                </div>
+                                <p>[[datoEvento.imagenEvento]]</p>
+                                <input type="hidden" ng-model="formImagen.id"  ng-init="formImagen.id = '[[id]]'"/>
+                                <input type="hidden" ng-model="formImagen.image"  ng-init="formImagen.image = '[[archivoSubido]]' "/>
+                                <input type="hidden" ng-model="formImagen.section" ng-init="formImagen.section = 'eliminarImagenEvento'"/>
+
+                                [% else %]
+                                <div ng-init="subirImagen = true"></div>
+                                [% endif%]
+                            </div>
+						{# INSERTAR MACRO DE IMAGENES #}
+                            <div ng-show="subirImagen">	
+                                [% import 'subirImagen.twig' as subirImagen%]
+                                [[ subirImagen.input(imagenSubida, idImagen, lang) ]]
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Título:</td>
+                        <td><input maxlength="40" type="text" ng-model="form.tituloEvento" ng-init="form.tituloEvento = '[[ datoEvento.tituloEvento ]]' " name="tituloEvento" value="[[ datoEvento.tituloEvento ]]">
+                            <p class="textoAclaracion">Nota: El título tiene un límite de 40 caracteres.</p></td>
+                    </tr>
+                    <tr>
+                        <td>Lugar:</td>
+                        <td><input type="text" ng-model="form.lugarEvento" ng-init="form.lugarEvento = '[[ datoEvento.lugarEvento ]]' "  name="lugarEvento" value="[[ datoEvento.lugarEvento ]]"></td>
+                    </tr>
+                    <tr>
+                        <td>Fecha de Inicio:</td>
+                        <td>
+                            <input type="text" ng-model="form.fechaInicioEvento" ng-init="form.fechaInicioEvento = '[[ datoEvento.fechaInicioEvento ]]' " name="fechaInicioEvento" value="[[ datoEvento.fechaInicioEvento ]]"><span class="textoAclaracion">(dd/mm/aaaa)</span>
+                            <input type="hidden" ng-model="form.section" ng-init="form.section = 'modificarEvento' "  name="section" >
+                            <input type="hidden" ng-model="form.idEvento"  ng-init="form.idEvento = '[[id]]'"/>
+                            <input type="hidden" ng-model="form.archivo" ng-init="form.archivo = '[[datoEvento.imagenEvento]]' "  name="archivo" >
+                            <input type="hidden" ng-model="form.mostrar" ng-init="form.mostrar = '[[ mostrar ]]'" name="mostrar"></td>
+                    </tr>
+                    <tr>
+                        <td>Fecha de Finalización:</td>
+                        <td>
+                            <input type="text" ng-model="form.fechaFinEvento" ng-init="form.fechaFinEvento = '[[ datoEvento.fechaFinEvento ]]' " name="fechaFinEvento" value="[[ datoEvento.fechaFinEvento ]]"><span class="textoAclaracion">(dd/mm/aaaa)</span></td>
+                    </tr>
+                    <tr>
+                        <td>Bajada:</td>
+                        <td><textarea maxlength="200" ng-model="form.descripcionEvento" ng-init="form.descripcionEvento = '[[ datoEvento.descripcionEvento ]]' " name="descripcionEvento">[[ datoEvento.descripcionEvento ]]</textarea>
+                            <p class="textoAclaracion">Nota: La bajada tiene un límite de 200 caracteres.</p></td>
+                    </tr>
+                    <tr>
+                        <td>Descripción:</td>
+                        <td><textarea data-ck-editor ng-model="form.cuerpoEvento" ng-init="form.cuerpoEvento = '[[ datoEvento.cuerpoEvento ]]' " name="cuerpoEvento">[[ datoEvento.cuerpoEvento ]]</textarea></td>
+                    </tr>
+                    {#
+                    <tr>
+                        <td>Destacada:</td>
+                        <td><input type="checkbox" ng-model="form.destacadoEvento" ng-init="form.destacadoEvento = '[[ datoEvento.destacadoEvento ]]' " name="destacadoEvento" ng-checked="datoEvento.destacadoEvento != '' "/></td>
+                    </tr>
+                    #}
+                </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button"  class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+            <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+        </div>
+    </form>  		
+</div>

@@ -1,0 +1,202 @@
+{# empty Twig template #}
+<script type="text/javascript">
+    controladorModel = '[[ paths.PATH_CONTROLLER_AREAS ]]controladorAdminModel.php';
+    lang = '[[ lang ]]';
+</script>
+<section>
+    <div class="contentInterno">
+        <div class="contenedor">
+            <p class="ubicacion"><a href="[[paths.PATH_HOME]][% if(localhost) %]?language=[[ lang ]][% else %][[ lang ]][% endif %]">[[ texts.inicio ]]</a>|<span class="seccion">[% if(texts) %][[texts.areas_de_trabajo]][% else %]Áreas de trabajo[% endif %]</span>|<span class="seccion">[[ datosArea.nombreArea ]]</span></p>
+
+
+            <h2>[[ datosArea.nombreArea ]]</h2>
+            <div class="divImgArea">
+                <img class="cover" src="[[paths.PATH_IMAGES]]coverImg.png" alt="">
+                <img alt="[[ datosArea.nombreArea ]]" src="[[ paths.PATH_IMAGES_AREAS ]][[ datosArea.imagenArea ]]">
+            </div>
+            <p class="textoArea">
+                [% autoescape false %]
+                [[ datosArea.descripcionArea ]]
+                [% endautoescape %]
+            </p>
+
+            [% if((cantNoticias > 0) or (cantNotas > 0) or (cantPosiciones > 0) or (cantPublicaciones > 0)) %]
+            <h2>Información relacionada con esta área:</h2>
+            [% if(cantNoticias > 0) %]
+            <div class="divNoticias">
+                <h3>Noticias</h3>
+                <ul>
+                    <li class="logItem unidadIndiceNoticia">
+                        [% for datoNoticia in noticias %]
+                        <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=noticia&nombreNoticiaUrl=[[ datoNoticia.nombreNoticiaUrl ]]&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/noticia/[[ datoNoticia.nombreNoticiaUrl ]][% endif %]">
+                            <img class="fotoNoticias" alt="[[ datoNoticia.tituloNoticia ]]" src="[[ paths.PATH_IMAGES_COMUNICACIONES ]][[ datoNoticia.imagenNoticia ]]">
+                            <p class="cargo">[[ datoNoticia.fechaNoticia|date('d/m/Y') ]]</p>    
+                            <h2>
+                                [% autoescape false %]
+                                [[ datoNoticia.tituloNoticia ]]
+                                [% endautoescape %]
+                            </h2>
+                            <p>
+                                [% autoescape false %]
+                                [[ datoNoticia.descripcionNoticia ]]
+                                [% endautoescape %]
+                            </p>
+                        </a>
+                        [% endfor %]
+                    </li>
+                </ul>
+
+            </div>
+            <div class="clear"></div>
+            [% endif %]
+            [% if(cantNotas > 0) %]
+            <div class="divNotas">
+                <h3>Notas</h3>
+                <ul>
+                    <li class="logItem unidadIndiceNoticia">
+                        [% for datoNota in notas %]
+                        <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=notaPrensa&notaPrensaUrl=[[ datoNota.notaPrensaUrl ]]&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/notaPrensa/[[ datoNota.notaPrensaUrl ]][% endif %]">
+                            <img class="fotoNoticias" alt="[[ datoNota.tituloNotaPrensa ]]" src="[[ paths.PATH_IMAGES_COMUNICACIONES ]][[ datoNota.imagenNotaPrensa ]]">
+                            <p class="fecha">[[ datoNota.fechaNotaPrensa|date('d/m/Y') ]]</p>
+                            <h2>
+                                [% autoescape false %]
+                                [[ datoNota.tituloNotaPrensa ]]
+                                [% endautoescape %]
+                            </h2>
+                            <p>
+                                [% autoescape false %]
+                                [[ datoNota.descripcionNotaPrensa ]]
+                                [% endautoescape %]
+                            </p>
+                        </a>
+                        [% endfor %]
+                    </li>
+                </ul>
+
+            </div>
+            <div class="clear"></div>
+            [% endif %]
+            [% if(cantPosiciones > 0) %]
+            <div class="divPosicionesCol">
+                <h3>Posiciones</h3>
+                <ul class="listaPDF">
+                    <li class="logItem itemListaPDF">
+                        [% for datoPosicion in posiciones %]
+                            {#<a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=posicion&nombrePosicionUrl=[[ datoPosicion.nombrePosicionUrl ]]&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/posicion/[[ datoPosicion.nombrePosicionUrl ]]/admin[% endif %]">#}
+                        <img alt="[[ datoPosicion.tituloPosicion ]]" src="[[ paths.PATH_IMAGES ]]tapaPdf.jpg">
+                        <div class="infoArchivoPDF">   
+                            <h2>
+                                [% autoescape false %]
+                                [[ datoPosicion.tituloPosicion ]]
+                                [% endautoescape %]
+                            </h2>
+                            <a href="[[ paths.PATH_IMAGES_COMUNICACIONES ]][[ datoPosicion.archivoPosicion ]]"><span class="descargarPDF">[% if(texts) %][[texts.descargar]][% else %]Descargar archivo PDF[% endif %]</span></a>
+                        </div>
+                        [% endfor %]
+                    </li>
+                        {#</a>#}
+                    <div class="clear"></div>
+                </ul>
+
+            </div> 
+            <div class="clear"></div>
+            [% endif %]
+
+            [% if(cantPublicaciones > 0) %]
+            <div class="divPublicacionesCol">
+                <h3>Publicaciones</h3>
+                <ul class="listaPDF">
+                    <li class="logItem itemListaPDF">
+                        [% for datoPublicacion in publicaciones %]
+                            {#<a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=publicacion&nombrePublicacionUrl=[[ datoPublicacion.nombrePublicacionUrl ]]&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/publicacion/[[ datoPublicacion.nombrePublicacionUrl ]]/admin[% endif %]">#}
+                        <div class="infoArchivoPDF">
+                            <img alt="[[ datoPublicacion.tituloPublicacionCanla ]]" src="[[ paths.PATH_IMAGES ]]tapaPdf.jpg">
+                            <h2>
+                                [% autoescape false %]
+                                [[ datoPublicacion.tituloPublicacionCanla ]]
+                                [% endautoescape %]
+                            </h2>
+                            <a href="[[ paths.PATH_IMAGES_PUBLICACIONES ]][[ datoPublicacion.archivoPublicacionCanlaUrl ]]"><span class="descargarPDF">[% if(texts) %][[texts.descargar]][% else %]Descargar archivo PDF[% endif %]</span></a>
+                        </div>
+                        [% endfor %]
+                    </li>
+                    <div class="clear"></div>
+                </ul>
+
+            </div>
+            <div class="clear"></div>
+            [% endif %]
+
+            [% if((cantNoticiasVerMas > 0) or (cantNotasVerMas > 0) or (cantPosicionesVerMas > 0) or (cantPublicacionesVerMas > 0)) %]
+            <div ng-controller="mainController">
+                <a ng-click="verMasArea([[ datosArea.idArea ]])" class="btnOutline">ver más</a>
+
+                    {# -- NOTICIAS DINAMICAS -- #}
+                <div ng-repeat="data in dataArray.noticias track by data.idNoticia" class="logItem unidaddeContenido">
+                    <ul>
+                        <li class="logItem unidadIndiceNoticia">
+                            <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=noticia&nombreNoticiaUrl={{ data.nombreNoticiaUrl }}&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/noticia/{{ data.nombreNoticiaUrl }}[% endif %]">
+                                <img class="fotoNoticias" alt="{{data.tituloNoticia}}" src="[[ paths.PATH_IMAGES_COMUNICACIONES ]]{{data.imagenNoticia}}">
+                                <p class="cargo">{{data.fechaNoticia}}</p>    
+                                <h2>{{data.tituloNoticia}}</h2>
+                                <p>{{data.descripcionNoticia}}</p>
+                            </a>
+                        </li>
+                        <div class="clear"></div>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+
+                    {# -- NOTAS DINAMICAS -- #}
+
+                <div ng-repeat="data in dataArray.notas track by data.idNotaPrensa" class="logItem unidaddeContenido">
+                    <ul>
+                        <li class="logItem unidadIndiceNoticia">
+                            <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=notaPrensa&notaPrensaUrl={{data.notaPrensaUrl}}&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/notaPrensa/{{data.notaPrensaUrl}}[% endif %]">
+                                <img class="fotoNoticias" alt="{{data.tituloNotaPrensa}}" src="[[ paths.PATH_IMAGES_COMUNICACIONES ]]{{data.imagenNotaPrensa}}">
+                                <p class="fecha">{{data.fechaNotaPrensa}}</p>
+                                <h2>{{data.tituloNotaPrensa}}</h2>
+                                <p>{{data.descripcionNotaPrensa}}</p>
+                            </a>
+                        </li>
+                        <div class="clear"></div>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+
+                                        {# -- POSICIONES DINAMICAS -- #}
+
+                <div ng-repeat="data in dataArray.posiciones track by data.idPosicion" class="logItem unidaddeContenido divPosicionesCol">
+                    <ul class="listaPDF">
+                        <li class="logItem itemListaPDF">
+                            <img alt="{{data.tituloPosicion}}" src="[[ paths.PATH_IMAGES ]]tapaPdf.jpg">
+                            <div class="infoArchivoPDF">   
+                                <h2>{{data.tituloPosicion}}</h2>
+                                <a href="[[ paths.PATH_IMAGES_COMUNICACIONES ]]{{data.archivoPosicion}}"><span class="descargarPDF">[% if(texts) %][[texts.descargar]][% else %]Descargar archivo PDF[% endif %]</span></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+
+                                        {# -- PUBLICACIONES DINAMICAS -- #}
+                <div ng-repeat="data in dataArray.publicaciones track by data.idPublicacion" class="logItem unidaddeContenido">
+                    <ul class="listaPDF">
+                        <li class="logItem itemListaPDF">
+                            <div class="infoArchivoPDF">
+                                <img alt="{{data.tituloPublicacionCanla}}" src="[[ paths.PATH_IMAGES ]]tapaPdf.jpg">
+                                <h2>{{data.tituloPublicacionCanla}}</h2>
+                                <a href="[[ paths.PATH_IMAGES_PUBLICACIONES ]]{{data.archivoPublicacionCanlaUrl}}"><span class="descargarPDF">[% if(texts) %][[texts.descargar]][% else %]Descargar archivo PDF[% endif %]</span></a>
+                            </div>
+                        </li>
+                        <div class="clear"></div>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+
+            </div>{# -- END MAINCONTROLLER VER MAS #}
+            [% endif %]
+            [% endif %]
+        </div>
+    </div>
+</section>

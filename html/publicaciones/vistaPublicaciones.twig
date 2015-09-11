@@ -1,0 +1,68 @@
+<script src="[[ paths.PATH_JS ]]controllers.js"></script>
+
+<script type="text/javascript">
+    urlSubmit = '[[ paths.PATH_CONTROLLER_PUBLICACIONES ]]controladorAdminModel.php?seccion=agregarPublicacionCanla&language=[[ lang ]]';
+    urlUploadImage = '[[ paths.PATH_PHP ]]upload.php?section=publicaciones';
+    controladorModel = '[[ paths.PATH_CONTROLLER_PUBLICACIONES ]]controladorAdminModel.php';
+    section = 'listadoPublicaciones';
+    lang = '[[ lang ]]';
+    etiquetas = 'etiquetasPublicacionCanla';
+    </script>
+
+
+    <section>
+        <div class="contentInterno">
+            <div class="contenedor">
+                <p class="ubicacion"><a href="[[paths.PATH_HOME]][% if(localhost) %]?language=[[ lang ]][% else %][[ lang ]][% endif %]">[[ texts.inicio ]]</a>|<span class="seccion">[[ texts.publicaciones ]]</span>|<span class="seccion">[[ texts.publicaciones_canla ]]</span></p>
+                <h2>[[ texts.publicaciones_canla ]]</h2>
+
+                [% if(perfil == 1) %]
+                <div class="divBtnAgregar" ng-controller="modalDefault" ng-init="init('[[paths.PATH_CONTROLLER_PUBLICACIONES]]controladorAdmin.php?seccion=agregarPublicacionCanla', 'pdfController')">
+                    <a class="btn agregar" ng-click="open()" >Agregar Publicación</a>
+                </div>
+                [% endif %]
+
+                <div ng-controller="mainController" ng-init="init()">
+                    <ul class="listaPDF">
+                        <li ng-repeat="data in dataArray track by data.idPublicacionCanla" class="logItem itemListaPDF">
+
+                            <div ng-show="data.archivoPublicacionCanla" class="infoArchivoPDF">
+                                <img  alt="{{data.tituloPublicacionCanla}}" src="[[ paths.PATH_IMAGES ]]tapaPdf.jpg">
+                                <div class="informacionPDF">
+                                    <h3>{{data.tituloPublicacionCanla}}</h3>
+                                    <a class="descargarPDF" href="[[ paths.PATH_IMAGES_PUBLICACIONES ]]{{data.archivoPublicacionCanla}}">[% if(texts) %][[texts.descargar]][% else %]Descargar[% endif %]</a>
+
+                                    [% if(perfil == 1) %]
+                                    <div class="comboBtnDerecha">
+                                        <div class="float marginR" ng-controller="mainController" >
+                                            <div class="success" ng-show="alertSuccess">{{alertSuccess}}</div>
+                                            <div class="error" ng-show="alertError">{{alertError}}</div>
+                                            <button class="btnOutline eliminar" type="button" ng-click="eliminarGenerico(data.idPublicacionCanla, '[[ paths.PATH_CONTROLLER_PUBLICACIONES ]]controladorAdminModel.php', 'borrarPublicacionCanla', '¿Está seguro que desea borrar la publicación?' )">Borrar</button>
+                                        </div>
+                                        <div class="float"  ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_PUBLICACIONES ]]controladorAdmin.php?seccion=modificarPublicacionCanla&idPublicacionCanla='+data.idPublicacionCanla+'&language=[[ lang ]]', 'pdfController')">
+                                            <a class="btn editar" ng-click="open()">Editar</a>
+                                        </div>
+                                    </div>
+                                    [% endif %]
+
+                                    <div ng-init="fetchTags(data.idPublicacionCanla)" class="divTags">
+                                        <ul class="tag-list">
+                                            <li class="tag-item" ng-repeat="tag in tags | tagFilter: data.idPublicacionCanla  track by tag.nombreEtiqueta">
+                                                <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER ]]etiquetas/controladorAdmin.php?seccion=mostrarEtiqueta&nombreEtiqueta={{tag.nombreEtiquetaUrl}}&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/tag/{{ tag.nombreEtiquetaUrl }}[% endif %]">{{tag.nombreEtiqueta}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="clear"></div>
+                        </li>
+                        {# [% import 'etiquetas.twig' as etiquetas%]
+                        [[ etiquetas.input(paths, 1, "sobrecanla") ]] #}
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </section>

@@ -1,0 +1,67 @@
+
+[% macro input(urlUpload) %]
+                
+                    <tr>
+                        <td>Carga de archivos:</td>
+                        <td>
+                            <div ng-show="uploader.isHTML5">
+                                <!-- 3. ng-file-over | ng-file-over="className" -->
+                                <div class="divCargaFoto bordeImg well my-drop-zone"  ng-file-drop="{ url: '../../php/upload.php?section=comunicaciones' }" ng-file-over="another-file-over-class">
+                                    Arrastrar archivos
+                                </div>
+                            </div>
+                            <!-- 2. ng-file-select | ng-file-select="options" -->
+                            <p><input ng-file-select type="file" multiple  /></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td>
+                            <p>Archivos a subir: {{ uploader.queue.length }}</p>
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th width="50%">Nombre</th>
+                                        <th ng-show="uploader.isHTML5">Tamaño</th>
+                                        <th ng-show="uploader.isHTML5">Progreso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in uploader.queue">
+                                        <td>
+                                            {{ item.file.name }}
+                                            <!-- Image preview -->
+                                            <!--auto height-->
+                                            <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
+                                            <!--auto width-->
+                                            <div ng-show="uploader.isHTML5" ng-thumb="{ file: item.file, height: 100 }"></div>
+                                            <!--fixed width and height -->
+                                            <!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
+                                        </td>
+                                        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                        <td ng-show="uploader.isHTML5">
+                                            <div class="progress" style="margin-bottom: 0;">
+                                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div>
+                                <p>
+                                    Progreso de subida:
+                                    <div class="progress" style="">
+                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+                                    </div>
+                                </p>
+                                <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading">Detener subida</button>
+                                <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue(borrarArreglo())" ng-disabled="!uploader.queue.length">Quitar Fotos</button>
+                            </div>
+                        </td>
+                    </tr>
+                               
+[% endmacro %]
+         

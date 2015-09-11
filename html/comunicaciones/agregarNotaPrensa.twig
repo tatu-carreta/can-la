@@ -1,0 +1,86 @@
+{# empty Twig template #}
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()"></button>
+        <h4 class="modal-title">Agregar nota de prensa</h4>
+    </div>
+
+    <form>
+        <div class="modal-body"  >
+
+
+            <table class="tablaModal">
+                <tr>
+                    <td>Foto:</td>
+                    <td>{# INSERTAR MACRO DE IMAGENES #}
+                        <div class="subirFoto"><!--<a class="eliminarChico"></a>-->
+                            <div class="">
+                                [% import 'subirImagen.twig' as subirImagen%]
+                                [[ subirImagen.input() ]]
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><p class="textoAclaracion">Nota: la imagen original debe tener 225px de ancho x 170px de alto.</p></td>
+                </tr>
+                <tr>
+                    <td>Título:</td>
+                    <td><input maxlength="80" type="text" ng-model="form.tituloNotaPrensa" ng-init="form.tituloNotaPrensa = '' " name="nombreNotaPrensa">
+                        <p class="textoAclaracion">Nota: El título tiene un límite de 80 caracteres.</p></td>
+                </tr>
+                <tr>
+                    <td>Bajada:</td>
+                    <td>
+                        <textarea maxlength="200" ng-model="form.descripcionNotaPrensa" ng-init="form.descripcionNotaPrensa = '' " name="descripcionNotaPrensa"></textarea>
+                        <p class="textoAclaracion">Nota: La bajada tiene un límite de 200 caracteres.</p>
+                        <input type="hidden" ng-model="form.section" ng-init="form.section = 'agregarNotaPrensa' "  name="section" ></td>
+                </tr>
+                <tr>
+                    <td>Cuerpo:</td>
+                    <td><textarea data-ck-editor ng-model="form.cuerpoNotaPrensa" ng-init="form.cuerpoNotaPrensa = '' " name="cuerpoNotaPrensa"></textarea></td>
+                </tr>
+                <tr>
+                    <td>Fecha:</td>
+                    <td><input type="text" ng-model="form.fechaNotaPrensa" ng-init="form.fechaNotaPrensa = '' " name="fechaNotaPrensa">(dd/mm/aaaa)</td>
+                </tr>
+                {#
+                <tr>
+                    <td>Destacada:</td>
+                    <td><input type="checkbox" ng-model="form.destacadoNotaPrensa" ng-init="form.destacadoNotaPrensa = '' " name="destacadoNotaPrensa" /></td>
+                </tr>
+                #}
+                <tr>
+                    <td>Área:</td>
+                    <td>
+                        <select ng-model="form.idArea" ng-init="form.idArea = '' " name="idArea" class="selectAdmin">
+                            <option value="">Seleccione un Área</option>
+                            [% for datoArea in areas %]
+                            <option value="[[ datoArea.idArea ]]">[[ datoArea.nombreArea ]]</option>
+                            [% endfor %]
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Etiquetas</td>
+                    <td> 
+                        <div>
+                            <tags-input ng-model="form.tags">
+                                <auto-complete source="loadTags($query)"></auto-complete>
+                            </tags-input>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <div class="">
+                <button type="button" class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+                <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+            </div>
+        </div>
+    </form><!-- form -->
+</div>

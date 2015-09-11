@@ -1,0 +1,29 @@
+{# empty Twig template #}
+<section>
+    <div class="contentInterno">
+        <div class="contenedor">
+            <p class="ubicacion"><a href="[[paths.PATH_HOME]][% if(localhost) %]?language=[[ lang ]][% else %][[ lang ]][% endif %]">[[ texts.inicio ]]</a>|<span class="seccion">[[texts.sobre_canla]]</span>|<span class="seccion">[[texts.can_internacional]]</span></p>
+            {# FALTAN LA IMAGEN Y EL SLIDE #}
+            <h2>[[texts.can_internacional]]</h2>
+            [% if(datoSobreCanla.idSobreCanla) %]
+            [% if(perfil == 1) %]
+            <div class="divBtnAgregar">
+                <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdmin.php?seccion=modificarCanInternacional&idSobreCanla=[[ datoSobreCanla.idSobreCanla ]]&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/modificarCanInternacional/[[ datoSobreCanla.idSobreCanla ]]/admin[% endif %]" class="btn editar marginR">Editar</a>
+            </div>
+            [% endif %]
+
+            <div class="textoEditado">
+                <div class="marginB"><img src="[[ paths.PATH_IMAGES_SOBRECANLA ]]can_internacional.jpg" alt="CAN Internacional" class="bordeImg"></div>
+                [% autoescape false %]
+                [[ datoSobreCanla.cuerpoSobreCanla|replace({'\n': "<br>"}) ]]
+                [% endautoescape %]
+            </div>
+            [% else %]
+            [% if(perfil == 1) %]
+            <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdmin.php?seccion=agregarCanInternacional&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/agregarCanInternacional/admin[% endif %]" class="btn agregar">Agregar Texto</a>
+            [% endif %]
+            [% endif %]
+            <p class="linkCAN" ><a href="http://www.climatenetwork.org/">www.climatenetwork.org</a></p>
+        </div>
+    </div>
+</section>

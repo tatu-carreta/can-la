@@ -1,0 +1,23 @@
+[% macro input(paths, id, carpeta) %]
+<script src="[[paths.PATH_JS]]angular-tags-0.3.1-tpls.js"></script>
+<link rel="stylesheet" href="[[paths.PATH_CSS]]angular-tags-0.3.1.css"/> 
+<script src="[[ paths.PATH_JS ]]tagDemo.js"></script>
+
+<div ng-controller="demoTags">
+    <form action="[[ paths.PATH_CONTROLLER ]]etiquetas/controladorAdminModel.php" method="post">
+        <input type="text" name="nombreEtiqueta" placeholder="Añade una nueva etiqueta">
+        <input type="hidden" name="section" value="agregarEtiqueta">
+        <input type="hidden" name="id" value="[[ id ]]">
+        <input type="hidden" name="carpeta" value="[[ carpeta ]]">
+        <input type="submit" value="Añadir">
+    </form>
+
+
+    <tags 
+        data-options="{addable: true, classes: {white: 'black', red: 'red'}}"
+        data-src="s as s.name for s in sourceTags"
+        data-model="tags">
+    </tags>
+</div>	
+
+[% endmacro %]

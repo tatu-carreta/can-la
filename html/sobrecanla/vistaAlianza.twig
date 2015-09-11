@@ -1,0 +1,80 @@
+
+<script src="[[ paths.PATH_JS ]]controllers.js"></script>
+
+<script type="text/javascript">
+    urlSubmit = '[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?seccion=agregarAlianza&language=[[ lang ]]';
+    urlUploadImage = '[[ paths.PATH_PHP ]]upload.php?section=[[section]]';
+    controladorModel = '[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php';
+    lang = '[[ lang ]]';
+    section = 'listadoAlianza';
+    </script>
+    <script src="[[ paths.PATH_JS ]]directives.js"></script>
+
+
+    <section>
+        <div class="contentInterno">
+            <div class="contenedor">
+                <p class="ubicacion"><a href="[[paths.PATH_HOME]][% if(localhost) %]?language=[[ lang ]][% else %][[ lang ]][% endif %]">[[ texts.inicio ]]</a>|<span class="seccion">[[texts.sobre_canla]]</span>|<span class="seccion">[[texts.alianzas]]</span></p>
+
+
+                <h2>[[texts.alianzas]]</h2>
+                [% if(perfil == 1) %]
+                <div class="divBtnAgregar" ng-controller="modalDefault" ng-init="init('[[paths.PATH_CONTROLLER]]sobrecanla/controladorAdmin.php?seccion=agregarAlianza', 'imgController')">
+                    <a class="btn agregar" ng-click="open()" >Agregar Alianza</a>
+                </div>
+                [% endif %]
+
+                [% autoescape  false  %]
+
+                <div ng-controller="mainController" ng-init="init()">
+                    <ul class="listaAlianzaPrincipal">{# Alianza Principal #}
+                        <li ng-repeat="data in dataArray.alianzasPrincipales track by data.idAlianza" class="logItem unidadAlianzaPrincipal">
+                            <div class="imgAlianzaPrincipal">
+                                <img alt="{{data.nombreAlianza}}" src="[[ paths.PATH_IMAGES_SOBRECANLA ]]{{data.logoAlianza}}">
+                            </div>
+                            <h3>{{data.nombreAlianza}}</h3>
+                            <p><a class="sitioWeb" href="{{data.urlAlianza}}">{{data.urlAlianza}}</a></p>
+                            [% if(perfil == 1) %]
+                            <div class="comboEliminarEditar">
+                                <div class="float marginR" ng-controller="mainController" >
+                                    <div class="success " ng-show="alertSuccess">{{alertSuccess}}</div>
+                                    <div class="error" ng-show="alertError">{{alertError}}</div>
+                                    <button class="btnOutline eliminar" type="button" ng-click="eliminarGenerico(data.idAlianza, '[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php', 'borrarAlianza', '¿Está seguro que desea borrar la alianza?' )">Borrar</button>
+                                </div>
+                                <div class="float" ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdmin.php?seccion=modificarAlianza&idAlianza='+data.idAlianza+'&language=[[ lang ]]', 'imgController')">
+                                    <a class="btn editar" ng-click="open()">Editar</a>
+                                </div>
+                            </div>
+                            [% endif %]
+                        </li>
+                        <div class="clear"></div>
+                    </ul>
+                    <div class="clear"></div>
+                    <ul class="listaAlianzaSecundaria">{# Alianza Secundaria #}
+                        <li ng-repeat="data in dataArray.alianzasSecundarias track by data.idAlianza" class="logItem unidadAlianzaSecundaria">
+                            <div class="imgAlianzaSecundaria">
+                                <img alt="{{data.nombreAlianza}}" src="[[ paths.PATH_IMAGES_SOBRECANLA ]]{{data.logoAlianza}}">
+                            </div>
+                            <h4>{{data.nombreAlianza}}</h4>
+                            <p><a href="{{data.urlAlianza}}">{{data.urlAlianza}}</a></p>
+                            [% if(perfil == 1) %]
+                            <div class="comboEliminarEditar">
+                                <div class="float marginR" ng-controller="mainController" >
+                                    <div class="success " ng-show="alertSuccess">{{alertSuccess}}</div>
+                                    <div class="error" ng-show="alertError">{{alertError}}</div>
+                                    <button class="btnOutline eliminar" type="button" ng-click="eliminarGenerico(data.idAlianza, '[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php', 'borrarAlianza', '¿Está seguro que desea borrar la alianza?' )">Borrar</button>
+                                </div>
+                                <div class="float" ng-controller="modalDefault" ng-init="init('[% if(localhost) %][[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdmin.php?seccion=modificarAlianza&idAlianza='+data.idAlianza+'&language=[[ lang ]][% else %][[ paths.PATH_HOME ]]modificarAlianza/{{data.idAlianza}}/[[ lang ]]/admin[% endif %]', 'imgController')">
+                                    <a class="btn editar" ng-click="open()">Editar</a>
+                                </div>
+                            </div>
+                            [% endif %]
+                        </li>
+                        <div class="clear"></div>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+                [% endautoescape %]
+            </div>
+        </div>
+    </section>

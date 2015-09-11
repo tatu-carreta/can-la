@@ -1,0 +1,8 @@
+[% macro input() %]
+
+			<tr><p>Insertar enlace de video:</p></tr>
+			<tr><input type="text" ng-change="fetchVideo()" ng-model="form.video" ng-init="form.video = '' "  name="video"/></tr>
+			<tr><img class="ng-show" ng-show="form.imageVideo" src="{{form.imageVideo}}" />	</tr>
+			<tr ng-show="form.videoTitle"><span>{{form.videoTitle}}</span></tr>
+
+[% endmacro %]

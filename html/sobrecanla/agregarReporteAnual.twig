@@ -1,0 +1,88 @@
+{# empty Twig template #}
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()"></button>
+        <h4 class="modal-title">Agregar Reporte Anual</h4>
+    </div>
+
+    <form>
+        <div class="modal-body"  >
+            <table class="tablaModal">
+                <tr>
+                    <td>Archivo:</td>
+                    <td>{# INSERTAR MACRO DE IMAGENES #}
+                        <div class="subirFoto">
+                                [% import 'subirImagen.twig' as subirImagen%]
+                                [[ subirImagen.input() ]]
+                            <div class="clear"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Título:</td>
+                    <td><input type="text" ng-model="form.tituloReporteAnual" name="tituloReporteAnual" placeholder="Título"></td>
+                </tr>
+                <tr>
+                    <td>Fecha:</td>
+                    <td><input type="text" ng-model="form.fechaManualReporteAnual" name="fechaManualReporteAnual" placeholder="dd/mm/AAAA">
+                    <span class="textoAclaracion">Nota: la fecha no se muestra, sólo sirve para ordenar. El formato debe ser: dd/mm/AAAA</span></td>
+                </tr>
+                <input type="hidden" ng-model="form.section" ng-init="form.section = 'agregarReporteAnual' "  name="section" >
+            </table>
+        </div>
+        <div class="modal-footer">
+            <div class="">
+                <button type="button" class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+                <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+            </div>
+        </div>
+    </form><!-- form -->
+</div>
+
+{# empty Twig template 
+<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<section>
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()">&times;</button>
+            <h4 class="modal-title">Agregar Reporte Anual</h4>
+        </div>
+
+        <form>
+
+            <div class="modal-body"  >
+
+                <!--- INSERTAR MACRO DE IMAGENES --->
+                [% import 'subirImagen.twig' as subirImagen%]
+                [[ subirImagen.input(urlUploadImage) ]]
+
+
+                <input type="text" ng-model="form.tituloReporteAnual" name="tituloReporteAnual" placeholder="Título">
+                <input type="date" ng-model="form.fechaManualReporteAnual" name="fechaManualReporteAnual" placeholder="Fecha">
+                <input type="hidden" name="section" value="agregarReporteAnual">
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="cancel()">Cerrar</button>
+                    <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?&language=[[ lang ]]', 'agregarReporteAnual')" class="btn btn-primary" >Publicar</button>
+
+                </div>
+            </div>
+        </form><!--- form --->
+    </div>
+</section>
+#}
+{# empty Twig template 
+<section>
+    <h1></h1>
+    <form enctype="multipart/form-data" action="[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?language=[[ lang ]]" method="post">
+        <input type="text" name="tituloReporteAnual">
+        <input type="date" name="fechaManualReporteAnual">
+        <input type="file" name="archivo">
+        <input type="hidden" name="section" value="agregarReporteAnual">
+        <input type="submit" value="Publicar">
+    </form>
+</section>
+#}

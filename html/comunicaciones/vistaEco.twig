@@ -1,0 +1,62 @@
+<script type="text/javascript">
+    urlSubmit = '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php?seccion=agregarEco&language=[[ lang ]]';
+    urlUploadImage = '[[ paths.PATH_PHP ]]upload.php?section=comunicaciones';
+    controladorModel = '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php';
+    lang = '[[ lang ]]';
+    section = 'listadoEco';
+    </script>
+
+
+
+    <section>
+        <div class="contentInterno">
+            <div class="contenedor" id="up">
+                <p class="ubicacion"><a href="[[paths.PATH_HOME]][% if(localhost) %]?language=[[ lang ]][% else %][[ lang ]][% endif %]">[[ texts.inicio ]]</a>|<span class="seccion">[[ texts.comunicaciones ]]</span>|<span class="seccion">[[ texts.eco ]]</span></p>
+                <h2>[[ texts.eco ]]</h2>
+
+                [% if(perfil == 1) %]
+                <div class="divBtnAgregar" ng-controller="modalDefault" ng-init="init('[[paths.PATH_CONTROLLER]]comunicaciones/controladorAdmin.php?seccion=agregarEco', 'pdfController')">
+                    <a class="btn agregar" ng-click="open()" >Agregar Eco</a>
+                </div>
+                [% endif %]
+
+                <div ng-controller="mainController" ng-init="init()">
+                    <ul class="listaPDF">
+                        <li ng-repeat="data in dataArray | startFrom:currentPage*(pageSize+1) | limitTo:(pageSize+1) track by data.idEco" class="logItem itemListaPDF">
+
+                            <div ng-show="data.archivoEco" class="infoArchivoPDF">
+                                <img  alt="{{data.tituloEco}}" src="[[ paths.PATH_IMAGES ]]tapaPdf.jpg">
+                                <div class="informacionPDF">
+                                    <h3>{{data.tituloEco}}</h4>
+                                    <a class="descargarPDF" href="[[ paths.PATH_IMAGES_COMUNICACIONES ]]{{data.archivoEco}}">[% if(texts) %][[texts.descargar]][% else %]Descargar[% endif %]</a>
+
+                                    [% if(perfil == 1) %]
+                                        <div class="comboBtnDerecha">
+                                            <div class="float marginR" ng-controller="mainController" >
+                                                <div class="success" ng-show="alertSuccess">{{alertSuccess}}</div>
+                                                <div class="error" ng-show="alertError">{{alertError}}</div>
+                                                <button class="btnOutline eliminar" type="button" ng-click="eliminarGenerico(data.idEco, '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php', 'borrarEco', '¿Está seguro que desea borrar la publicación?' )">Borrar</button>
+                                            </div>
+                                            <div class="float"  ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=modificarEco&idEco='+data.idEco+'&language=[[ lang ]]', 'pdfController')">
+                                                <a class="btn editar" ng-click="open()">Editar</a>
+                                            </div>
+                                        </div>
+                                    [% endif %]
+                                </div>
+                            </div>{#cierra unidad#}
+                        </li>
+                    {# [% import 'etiquetas.twig' as etiquetas%]
+                    [[ etiquetas.input(paths, 1, "sobrecanla") ]] #}
+                    <div class="clear"></div>
+                    </ul>
+                    <div class="paginador" ng-show="dataArray.length > 0">
+                            <a href="#up"  ng-hide="currentPage == 0" ng-click="currentPage=currentPage-1" class="pagPrev">Previous</a>
+                            <span>Página {{currentPage+1}}/{{numberOfPages( dataArray.length-1 )}}</span>
+                            <a href="#up"  ng-hide="currentPage >= dataArray.length/(pageSize+1) - 1" ng-click="currentPage=currentPage+1" class="pagNext">Next</a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>

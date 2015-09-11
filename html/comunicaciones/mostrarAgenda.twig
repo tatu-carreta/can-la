@@ -1,0 +1,110 @@
+{# empty Twig template #}
+<script type="text/javascript">
+    urlUploadImage = '[[ paths.PATH_PHP ]]upload.php?section=comunicaciones';
+    controladorModel = '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php';
+    </script>
+    <section>
+        <div class="contentInterno">
+            <div class="contenedor">
+                <p class="ubicacion"><a href="[[paths.PATH_HOME]][% if(localhost) %]?language=[[ lang ]][% else %][[ lang ]][% endif %]">[[ texts.inicio ]]</a>|<span class="seccion">[[texts.comunicaciones]]</span>|<a href="[% if (localhost) %][[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=agenda&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/comunicaciones/agenda[% endif %]"><span class="seccion">[[ texts.agenda ]]</span></a>|<span class="seccion">[[datoEvento.tituloEventoRecorte]]</span></p>
+                <h2>[[ texts.agenda ]]</h2>
+                [% if(perfil == 1) %]
+                <div class="comboEliminarEditar elimeditNotas">
+                    <div class="float marginR" ng-controller="mainController" >
+                        <div class="success " ng-show="alertSuccess">{{alertSuccess}}</div>
+                        <div class="error" ng-show="alertError">{{alertError}}</div>
+                        <button class="btnOutline eliminar" type="button" ng-click="eliminarGenerico([[datoEvento.idEvento]], '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php', 'borrarEvento', '¿Está seguro que desea borrar el evento?' )">Borrar Evento</button>
+                    </div>
+                    <div class="float" ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=modificarEvento&idEvento=[[datoEvento.idEvento]]&language=[[ lang ]]&mostrar=ok', 'imgController')">
+                        <a class="btn editar" ng-click="open()"> Editar</a>
+                    </div>
+                </div>
+                [% endif %]
+                <div class="nota">
+                    <div class="infoSecundaria">
+                        <img alt="[[datoEvento.tituloEvento]]" src="[[ paths.PATH_IMAGES_COMUNICACIONES ]][[datoEvento.imagenEvento]]">
+                        [% if((perfil != 1) and (cantArchivos > 0)) %]
+                        <h4>Archivos</h4>
+                        [% for datoArchivo in archivos %]
+                        <a class="descargarPDF" href="[[ paths.PATH_IMAGES_COMUNICACIONES ]][[ datoArchivo.nombreArchivoEvento ]]">[[ datoArchivo.tituloArchivoEvento ]]</a>
+                        [% endfor %]
+                        [% elseif(perfil == 1) %]
+                        <h4>Archivos</h4>
+                        <div class="divAgregarArchivos" ng-controller="modalDefault" ng-init="init('[[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=agregarArchivosEvento&id=[[ datoEvento.idEvento ]]', 'pdfsController')">
+                            <a class="btn agregar" ng-click="open()" >Agregar archivos</a>
+                        </div>
+                        [% for datoArchivo in archivos %]
+                        <a class="descargarPDF" href="[[ paths.PATH_IMAGES_COMUNICACIONES ]][[ datoArchivo.nombreArchivoEvento ]]">[[ datoArchivo.tituloArchivoEvento ]]</a>
+                        <div class="float marginR" ng-controller="mainController" >
+                            <button class="btnOutline eliminar" type="button" ng-click="eliminarVideoImagenGenerico([[ datoArchivo.idArchivoEvento ]], 'evento', '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php', 'borrarArchivoEvento', '¿Está seguro que desea borrar el archivo del evento?' )">Borrar Archivo</button>
+                        </div>
+                        [% endfor %]
+                        [% endif %]
+                    </div>
+
+                    <div class="cpoPrincipal">
+                        <p class="fecha">Del [[datoEvento.fechaInicioEvento|date("d/m/Y")]] al [[datoEvento.fechaFinEvento|date("d/m/Y")]]</p>
+                        <h2>[[datoEvento.tituloEvento]]</h2>
+                        <p class="lugar">[[datoEvento.lugarEvento]]</p>
+                        <h3>[[datoEvento.descripcionEvento]]</h3>
+                        <p>
+                            [% autoescape false %]
+                            [[datoEvento.cuerpoEvento]]
+                            [% endautoescape %]
+                        </p>
+                        [% if((perfil != 1) and (cantFotos > 0)) %]
+                        <div class="divFotos">
+                            <h4>Fotos</h4>
+                            <hr>
+                            [% for datoImagen in imagenes %]
+                            <img alt="[[ datoEvento.tituloEvento ]]" src="[[ paths.PATH_IMAGES_COMUNICACIONES ]][[ datoImagen.nombreImagenEvento ]]">
+                            [% endfor %]
+                        </div>
+                        [% elseif(perfil == 1) %]
+                        <div class="divFotos">
+                            <h4>Fotos</h4>
+                            [% if(perfil == 1) %]
+                            <div class="divAgregarFotos" ng-controller="modalDefault" ng-init="init('[[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=agregarGaleriaEvento&id=[[ datoEvento.idEvento ]]', 'imagesController')">
+                                <a class="btn agregar" ng-click="open()" >Agregar fotos</a>
+                            </div>
+                            [% endif %]
+                            <hr>
+                            [% for datoImagen in imagenes %]
+                            <img alt="[[ datoEvento.tituloEvento ]]" src="[[ paths.PATH_IMAGES_COMUNICACIONES ]][[ datoImagen.nombreImagenEvento ]]">
+                            <div class="float marginR" ng-controller="mainController" >
+                                <button class="btnOutline eliminar" type="button" ng-click="eliminarVideoImagenGenerico([[ datoImagen.idImagenEvento ]], 'evento', '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php', 'borrarImagen', '¿Está seguro que desea borrar la foto del evento?' )">Borrar Foto</button>
+                            </div>
+                            [% endfor %]
+                        </div>
+                        [% endif %]
+                        [% if((perfil != 1) and (cantVideos > 0)) %]
+                        <div class="divFotos">
+                            <h4>Videos</h4>
+                            <hr>
+                            [% for datoVideo in videos %]
+                            <iframe width="520" height="310" src="[[ datoVideo.nombreVideoEventoEmbed ]]" frameborder="0" allowfullscreen></iframe>
+                            [% endfor %]
+                        </div>
+                        [% elseif(perfil == 1) %]
+                        <div class="divFotos">
+                            <h4>Videos</h4>
+                            [% if(perfil == 1) %]
+                            <div class="divAgregarVideo" ng-controller="modalDefault" ng-init="init('[[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=agregarVideoEvento&id=[[datoEvento.idEvento]]', 'imgController')">
+                                <a class="btn agregar" ng-click="open()" >Agregar Video</a>
+                            </div>
+                            [% endif %]
+                            <hr>
+                            [% for datoVideo in videos %]
+                            <iframe width="520" height="310" src="[[ datoVideo.nombreVideoEventoEmbed ]]" frameborder="0" allowfullscreen></iframe>
+                            <div class="float marginR" ng-controller="mainController" >
+                                <button class="btnOutline eliminar" type="button" ng-click="eliminarVideoImagenGenerico([[ datoVideo.idVideoEvento ]], 'evento', '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php', 'borrarVideo', '¿Está seguro que desea borrar el video del evento?' )">Borrar Video</button>
+                            </div>
+                            [% endfor %]
+                        </div>
+                        [% endif %]
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+    </section>

@@ -1,0 +1,130 @@
+
+<script type="text/javascript">
+    urlSubmit = '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php?seccion=agregarNotaPrensa&language=[[ lang ]]';
+    urlUploadImage = '[[ paths.PATH_PHP ]]upload.php?section=comunicaciones';
+    controladorModel = '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php';
+    section = 'listadoNotaPrensa';
+    lang = '[[ lang ]]';
+    etiquetas = 'etiquetasNotaPrensa';
+    </script>
+
+
+
+    <section>
+        <div class="contentInterno">
+            <div class="contenedor">
+                <p class="ubicacion"><a href="[[paths.PATH_HOME]][% if(localhost) %]?language=[[ lang ]][% else %][[ lang ]][% endif %]">[[ texts.inicio ]]</a>|<span class="seccion">[[ texts.comunicaciones ]]</span>|<span class="seccion">[[ texts.notas_de_prensa ]]</span></p>
+                <h2>[[ texts.notas_de_prensa ]]</h2>
+
+                [% if(perfil == 1) %]
+                <div class="divBtnAgregar" ng-controller="modalDefault" ng-init="init('[[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=agregarNotaPrensa', 'imgController')">
+                    <a class="btn agregar" ng-click="open()" >Agregar Nota de Prensa</a>
+                </div>
+                [% endif %]
+
+                [% autoescape  false  %]
+
+                <div ng-controller="mainController" ng-init="init()"> {# aca se llama al listado #}
+                    <ul class="noticiasDestacadas">
+                        <li ng-repeat="data in dataArray.notasDestacadas | startFrom:currentPage*pageSize | limitTo:pageSize track by data.idNotaPrensa" class="logItem unidadNoticiaDestacada" ng-class="['bgAzul', 'bgVerde'][$index % 2]">
+                            <a href="[% if(localhost) %][[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=notaPrensa&notaPrensaUrl={{data.notaPrensaUrl}}&language=[[lang]][% else %][[ paths.PATH_HOME ]][[ lang ]]/notaPrensa/{{ data.notaPrensaUrl }}[% endif %]">
+                                <div class="divImg">
+                                    <div class="coverI"></div>
+                                    <img class="fotoNoticias" alt="{{data.tituloNotaPrensa}}" src="[[ paths.PATH_IMAGES_COMUNICACIONES ]]{{data.imagenNotaPrensa}}">
+                                </div>
+                                <div class="textoIndiceNoticias">
+                                    <p class="fecha">{{data.fechaNotaPrensa}}</p>
+                                    <h2>{{data.tituloNotaPrensa}}</h2>
+                                    <p>{{data.descripcionNotaPrensa}}</p>
+                                    
+                                    [% if(perfil == 1) %]
+                                    <div class="comboEliminarEditar">
+                                        <div class="float marginR" ng-controller="mainController" >
+                                            <div class="success " ng-show="alertSuccess">{{alertSuccess}}</div>
+                                            <div class="error" ng-show="alertError">{{alertError}}</div>
+                                            <a class="btnOutline eliminar" type="button" ng-click="eliminarGenerico(data.idNotaPrensa, '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php', 'borrarNotaPrensa', '¿Está seguro que desea borrar la nota de prensa?' )">Borrar nota de prensa</a>
+                                        </div>
+                                        <div class="float" ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=modificarNotaPrensa&idNotaPrensa='+data.idNotaPrensa+'&language=[[ lang ]]', 'imgController')">
+                                            <a class="btn editar marginR" ng-click="open()"> Editar</a>
+                                        </div>
+
+                                        <div ng-show="data.destacadoNotaPrensa !='t'" class="float" ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=destacarNotaPrensa&idNotaPrensa='+data.idNotaPrensa+'&language=[[ lang ]]', 'imgController')">
+                                            <a class="btn editar marginR" ng-click="open()"> Destacar</a>
+                                        </div>
+
+                                        <button  ng-show="data.destacadoNotaPrensa == 't'" class="btnOutline eliminar" ng-click="eliminarGenerico(data.idNotaPrensa, '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php', 'quitarDestacadoNotaPrensa', '¿Quitar la nota de prensa de destacados?' )"> Quitar destacado</button>
+
+
+                                    </div>
+                                    [% endif %]
+                                    <div class="clear"></div>
+                                    {#
+                                    <div ng-init="fetchTags(data.idNotaPrensa)" class="divTags">
+                                        <ul class="tag-list">
+                                            <li class="tag-item" ng-repeat="tag in tags | tagFilter: data.idNotaPrensa  track by tag.nombreEtiqueta">
+                                                <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER ]]etiquetas/controladorAdmin.php?seccion=mostrarEtiqueta&nombreEtiqueta={{tag.nombreEtiquetaUrl}}&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/tag/{{ tag.nombreEtiquetaUrl }}[% endif %]">{{tag.nombreEtiqueta}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    #}
+                                </div>
+                            </a>
+                                <div class="clear"></div>
+                        </li>
+                        <div class="clear"></div>
+                    </ul>
+                    <div class="clear"></div>
+                    <ul>
+                        <li ng-repeat="data in dataArray.notas | startFrom:currentPage*pageSize | limitTo:pageSize track by data.idNotaPrensa" class="logItem unidadIndiceNoticia">
+                            <a href="[% if(localhost) %][[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=notaPrensa&notaPrensaUrl={{data.notaPrensaUrl}}&language=[[lang]][% else %][[ paths.PATH_HOME ]][[ lang ]]/notaPrensa/{{ data.notaPrensaUrl }}[% endif %]">
+                                <img class="fotoNoticias" alt="{{data.tituloNotaPrensa}}" src="[[ paths.PATH_IMAGES_COMUNICACIONES ]]{{data.imagenNotaPrensa}}">
+                                <div class="textoIndiceNoticias">
+                                    <p class="fecha">{{data.fechaNotaPrensa}}</p>
+                                    <h2>{{data.tituloNotaPrensa}}</h2>
+                                    <p>{{data.descripcionNotaPrensa}}</p>
+                                    <div class="clear"></div>
+                                    [% if(perfil == 1) %]
+                                    <div class="comboEliminarEditar">
+                                        <div class="float marginR" ng-controller="mainController" >
+                                            <div class="success " ng-show="alertSuccess">{{alertSuccess}}</div>
+                                            <div class="error" ng-show="alertError">{{alertError}}</div>
+                                            <a class="btnOutline eliminar" type="button" ng-click="eliminarGenerico(data.idNotaPrensa, '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php', 'borrarNotaPrensa', '¿Está seguro que desea borrar la nota de prensa?' )">Borrar nota de prensa</a>
+                                        </div>
+                                        <div class="float" ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=modificarNotaPrensa&idNotaPrensa='+data.idNotaPrensa+'&language=[[ lang ]]', 'imgController')">
+                                            <a class="btn editar marginR" ng-click="open()"> Editar</a>
+                                        </div>
+
+                                        <div ng-show="data.destacadoNotaPrensa !='t'" class="float" ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=destacarNotaPrensa&idNotaPrensa='+data.idNotaPrensa+'&language=[[ lang ]]', 'imgController')">
+                                            <a class="btn editar marginR" ng-click="open()"> Destacar</a>
+                                        </div>
+
+                                        <button  ng-show="data.destacadoNotaPrensa == 't'" class="btnOutline eliminar" ng-click="eliminarGenerico(data.idNotaPrensa, '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php', 'quitarDestacadoNotaPrensa', '¿Quitar la nota de prensa de destacados?' )"> Quitar destacado</button>
+
+
+                                    </div>
+                                    [% endif %]
+                                    <div class="clear"></div>
+                                    <div ng-init="fetchTags(data.idNotaPrensa)" class="divTags">
+                                        <ul class="tag-list">
+                                            <li class="tag-item" ng-repeat="tag in tags | tagFilter: data.idNotaPrensa  track by tag.nombreEtiqueta">
+                                                <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER ]]etiquetas/controladorAdmin.php?seccion=mostrarEtiqueta&nombreEtiqueta={{tag.nombreEtiquetaUrl}}&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/tag/{{ tag.nombreEtiquetaUrl }}[% endif %]">{{tag.nombreEtiqueta}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="paginador" ng-show="dataArray.length > 0">
+                        <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" class="pagPrev">Previous</button>
+                        Página {{currentPage+1}}/{{numberOfPages()}}
+                        <button ng-disabled="currentPage >= dataArray.length/pageSize - 1" ng-click="currentPage=currentPage+1" class="pagNext">Next</button>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                [% endautoescape %]
+            </div>
+        </div>
+    </section>
+

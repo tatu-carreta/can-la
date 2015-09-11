@@ -1,0 +1,70 @@
+{# empty Twig template #}
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()"></button>
+        <h4 class="modal-title">Agregar Alianza</h4>
+    </div>
+
+    <form>
+        <div class="modal-body"  >
+
+
+            <table class="tablaModal">
+                <tr>
+                    <td>Foto:</td>
+                    <td>{# INSERTAR MACRO DE IMAGENES #}
+                        <div class="subirFoto"><!--<a class="eliminarChico"></a>-->
+                            <div class="">
+                                [% import 'subirImagen.twig' as subirImagen%]
+                                [[ subirImagen.input() ]]
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nombre:</td>
+                    <td><input type="text" ng-model="form.nombreAlianza" name="nombreAlianza" placeholder="Nombre"></td>
+                </tr>
+                <tr>
+                    <td>URL:</td>
+                    <td><input type="text" ng-model="form.urlAlianza" name="urlAlianza" placeholder="http://www.dominio.com"></td>
+                </tr>
+                <tr>
+                    <td>Categoría</td>
+                    <td><select required ng-model="form.categoriaAlianza" name="categoriaAlianza">
+                            <option value="">Seleccione una categoría</option>
+                            <option value="1">Principales</option>
+                            <option value="2">Secundarios</option>
+                        </select></td>
+                </tr>
+                <input type="hidden" ng-model="form.section" ng-init="form.section = 'agregarAlianza' "  name="section" >
+            </table>
+        </div>
+        <div class="modal-footer">
+            <div class="">
+                <button type="button" class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+                <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+            </div>
+        </div>
+    </form><!-- form -->
+</div>
+
+{# empty Twig template 
+<section>
+    <h1>Agregar Alianza</h1>
+    <form enctype="multipart/form-data" action="[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?language=[[ lang ]]" method="post">
+        <input type="text" name="nombreAlianza" placeholder="Nombre de Alianza">
+        <input type="text" name="urlAlianza" placeholder="URL Alianza">
+        <input type="file" name="logoAlianza">
+        <select required name="categoriaAlianza">
+            <option value="">Seleccione una categoría</option>
+            <option value="1">Principales</option>
+            <option value="2">Secundarios</option>
+        </select>
+        <input type="hidden" name="section" value="agregarAlianza">
+        <input type="submit" value="Publicar">
+    </form>
+</section>
+#}

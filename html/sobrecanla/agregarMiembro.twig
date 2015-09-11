@@ -1,0 +1,72 @@
+{# empty Twig template #}
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()"></button>
+        <h4 class="modal-title">Agregar Miembro</h4>
+    </div>
+
+    <form>
+        <div class="modal-body"  >
+
+
+            <table class="tablaModal">
+                <tr>
+                    <td>Logo:</td>
+                    <td>{# INSERTAR MACRO DE IMAGENES #}
+                        <div class="subirFoto"><!--<a class="eliminarChico"></a>-->
+                            <div class="">
+                                [% import 'subirImagen.twig' as subirImagen%]
+                                [[ subirImagen.input() ]]
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><p class="textoAclaracion">Nota: la imagen original no debe tener más de 200px de ancho (no importa el alto).</p></td>
+                    </tr>
+                <tr>
+                    <td>Nombre:</td>
+                    <td><input type="text" ng-model="form.nombreMiembro" ng-init="form.nombreMiembro = '' " name="nombreMiembro"></td>
+                </tr>
+                <tr>
+                    <td>Sitio web:</td>
+                    <td><input type="text" ng-model="form.urlMiembro" ng-init="form.urlMiembro = '' "  name="urlMiembro">
+                </tr>
+                <tr>
+                    <td>Representante:</td>
+                    <td><input type="hidden" ng-model="form.section" ng-init="form.section = 'agregarMiembro' "  name="section" >
+                        <input type="text" ng-model="form.representanteMiembro" ng-init="form.representanteMiembro = '' " name="representanteMiembro"></td>
+                </tr>
+                {#<tr>
+                    <td>Dirección:</td>
+                    <td><input type="text" ng-model="form.direccionMiembro" ng-init="form.direccionMiembro = '' "  name="direccionMiembro"></td>
+                </tr>#}
+                <tr>
+                    <td>Descripción:</td>
+                    <td><textarea maxlength="380" ng-model="form.descripcionMiembro" ng-init="form.descripcionMiembro = '' "  name="descripcionMiembro"></textarea></td>
+                </tr>
+                <tr>
+                    <td>País:</td>
+                    <td>
+                        <select class="selectAdmin" ng-model="form.idPais" ng-init="form.idPais = '' " name="idPais">
+                            <option value="">Seleccione un País</option>
+                            [% for datoPais in paises %]
+                            <option value="[[ datoPais.idPais ]]">[[ datoPais.nombrePais ]]</option>
+                            [% endfor %]
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <input type="hidden" ng-model="form.latitud" ng-init="form.latitud = '' "  name="latitud" >
+        <input type="hidden" ng-model="form.longitud" ng-init="form.longitud = '' "  name="longitud" >
+        <div class="modal-footer">
+            <div class="">
+                <button type="button" class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+                <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+            </div>
+        </div>
+    </form><!-- form -->
+</div>

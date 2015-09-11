@@ -1,0 +1,32 @@
+<script src="../js/angular/angular.js"></script>
+<script src="../js/ui-bootstrap-tpls-0.10.0.js"></script>
+<script src="../js/module.js"></script>
+<script src="../js/angular-file-upload.js"></script>
+<script src="../js/jquery-1.10.2.min.js"></script> 
+<script src="../js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="../js/controllers.js"></script>
+
+
+<style type="text/css">
+    li {
+    padding: 5px;
+    border: 1px solid #999;
+    background: #eee;
+    margin: 5px;
+    cursor: move;
+}
+
+</style>
+
+
+<div ng-controller="SortableCTRL">
+
+    {{defaykt}}
+    <ul id="sortable">
+        <li ng-repeat="item in sortableArray" ng-bind="item"></li>
+    </ul>
+    
+    <button ng-click="add()">Add</button>
+    <hr>
+    <pre ng-bind="sortableArray|json"></pre>
+</div>

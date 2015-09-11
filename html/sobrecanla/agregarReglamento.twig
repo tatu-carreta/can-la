@@ -1,0 +1,20 @@
+{# empty Twig template #}
+<seccion>
+    <div class="contentInterno">
+        <div class="contenedor">
+            <p class="ubicacion"><a href="[[paths.PATH_HOME]][% if(localhost) %]?language=[[ lang ]][% else %][[ lang ]][% endif %]">[[ texts.inicio ]]</a>|<span class="seccion">[[texts.sobre_canla]]</span>|<span class="seccion">[[texts.reglamento]]</span></p>
+            <h2>Agregar Reglamento</h2>
+            <div class="editor">
+                <form id="formularioReglamento" action="[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php" method="post" >
+                    <textarea id="agregarReglamento" name="cuerpoSobreCanla"></textarea>
+                    <input type="hidden" name="section" value="agregarSobreCanla" />
+                    <input type="hidden" name="tipoSobreCanla" value="R" />
+                    <div class="comboBtnDerecha">
+                        <input type="button" value="Cancelar" onclick="window.history.back()" class="btnOutline btn-default cancelar marginR" >
+                        <input type="submit" value="Publicar" class="btn publicar"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</seccion>

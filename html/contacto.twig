@@ -1,0 +1,41 @@
+<section>
+    <div class="contentInterno">
+        <div class="contenedor">
+            <p class="ubicacion"><a href="[[paths.PATH_HOME]][% if(localhost) %]?language=[[ lang ]][% else %][[ lang ]][% endif %]">[[ texts.inicio ]]</a>|<span class="seccion">[[ texts.contacto ]]</span></p>
+
+            <h2>[[ texts.contacto ]]</h2>
+
+            <p>[% autoescape false %][[ texts.texto_contacto ]][% endautoescape %]</p>
+
+            <form action="[[ paths.PATH_PHP ]]envia.php" method="post"> 
+
+                <div class="col-form-izq">
+                    <p><label>[[ texts.nombre_y_apellido ]]:<span>*</span><br />
+                            <input type="text" name="nombre" class="campo-form" required />
+                        </label></p>
+                    <p><label>[[ texts.ciudad_y_pais ]]:<span>*</span><br />
+                            <input type="text" name="ciudad" class="campo-form" required />
+                        </label></p
+                    <p><label>Email:<span>*</span><br />
+                            <input type="email" name="email" class="campo-form" required />
+                        </label></p>
+                    <p><label>[[ texts.organizacion ]]:<br />
+                            <input type="text" name="organizacion" class="campo-form" required />
+                        </label></p>
+                    <p><label>[[ texts.asunto ]]:<br />
+                            <input type="text" name="asunto" class="campo-form" required />
+                        </label></p>
+                </div>
+
+                <div class="col-form-der">
+                    <p><label>[[ texts.consulta ]]:<br />
+                            <textarea name="consulta"></textarea>
+                        </label></p>
+                    <label><input type="submit" value="ENVIAR" class="btn"/></label>
+                </div>
+                <div class="clear"></div>
+            </form>
+
+        </div>
+    </div>
+</section>

@@ -1,0 +1,67 @@
+{# empty Twig template #}
+<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    id = [[datoArea.idArea]];
+    </script>
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h4 class="modal-title">Editar Área</h4>
+        </div>
+        <div class="modal-body">
+            <form enctype="multipart/form-data" action="[[ paths.PATH_CONTROLLER_AREAS ]]controladorAdminModel.php?language=[[ lang ]]" method="post">
+                <table class="tablaModal">
+                    <tr>
+                        <td>Foto:</td>
+                        <td>
+                            [% set id = datoArea.idArea %]
+                            <div ng-show="!subirImagen">
+                                [% if datoArea.imagenArea is defined and datoArea.imagenArea is not empty%]
+                                [% set archivoSubido = paths.PATH_IMAGES ~ "areas/" ~ datoArea.imagenArea %]
+                                <div class="minArchivoCargado">
+                                    <img class="thumb" src="[[paths.PATH_IMAGES_AREAS]][[ datoArea.imagenArea ]]"/>
+                                    <button type="button" ng-click="eliminarDinamico('[[ paths.PATH_CONTROLLER_AREAS ]]controladorAdminModel.php?language=[[ lang ]]', formImagen)" class="eliminarChico eliminarFoto"></button>
+                                </div>
+                                <p>[[datoNoticia.imagenNoticia]]</p>
+                                <input type="hidden" ng-model="formImagen.id"  ng-init="formImagen.id = '[[id]]'"/>
+                                <input type="hidden" ng-model="formImagen.image"  ng-init="formImagen.image = '[[archivoSubido]]' "/>
+                                <input type="hidden" ng-model="formImagen.section" ng-init="formImagen.section = 'eliminarImagenArea'"/>
+
+                                [% else %]
+                                <div ng-init="subirImagen = true"></div>
+                                [% endif%]
+                            </div>
+						{# INSERTAR MACRO DE IMAGENES #}
+                            <div ng-show="subirImagen">	
+                                [% import 'subirImagen.twig' as subirImagen%]
+                                [[ subirImagen.input(imagenSubida, idImagen, lang) ]]
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                    <td></td>
+                    <td><p class="textoAclaracion">Nota: la imagen debe medir 940 x 360px.</p></td>
+                    </tr>
+                    <tr>
+                        <td>Nombre:</td>
+                        <td><input type="text" ng-model="form.nombreArea" ng-init="form.nombreArea = '[[ datoArea.nombreArea ]]' " name="nombreArea" value="[[ datoArea.nombreArea ]]"></td>
+                    </tr>
+                    <tr>
+                        <td>Descripción:</td>
+                        <td><input type="hidden" ng-model="form.section" ng-init="form.section = 'modificarArea' "  name="section" >
+                            <input type="hidden" ng-model="form.archivo" ng-init="form.archivo = '[[datoArea.imagenArea]]' "  name="archivo" >
+                            <input type="hidden" ng-model="form.id"  ng-init="form.id = '[[id]]'"/>
+                            <textarea ng-model="form.descripcionArea" ng-init="form.descripcionArea = '[[ datoArea.descripcionArea ]]' " name="descripcionArea">[[ datoArea.descripcionArea ]]</textarea></td>
+                    </tr>
+                </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button"  class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+            <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_AREAS ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+        </div>
+    </form>  		
+</div>

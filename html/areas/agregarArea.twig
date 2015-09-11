@@ -1,0 +1,88 @@
+{# empty Twig template #}
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()"></button>
+        <h4 class="modal-title">Agregar Área</h4>
+    </div>
+
+    <form>
+        <div class="modal-body"  >
+
+
+            <table class="tablaModal">
+                <tr>
+                    <td>Foto:</td>
+                    <td>{# INSERTAR MACRO DE IMAGENES #}
+                        <div class="subirFoto"><!--<a class="eliminarChico"></a>-->
+                            <div class="">
+                                [% import 'subirImagen.twig' as subirImagen%]
+                                [[ subirImagen.input() ]]
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><p class="textoAclaracion">Nota: la imagen debe medir 940px x 360px.</p></td>
+                </tr>
+                <tr>
+                    <td>Nombre:</td>
+                    <td><input type="text" ng-model="form.nombreArea" ng-init="form.nombreArea = '' " name="nombreArea"></td>
+                </tr>
+                <tr>
+                    <td>Descripción:</td>
+                    <td><input type="hidden" ng-model="form.section" ng-init="form.section = 'agregarArea' "  name="section" >
+                        <textarea ng-model="form.descripcionArea" ng-init="form.descripcionArea = '' " name="descripcionArea"></textarea></td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <div class="">
+                <button type="button" class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+                <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_AREAS ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+            </div>
+        </div>
+    </form><!-- form -->
+</div>
+{#
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()"></button>
+        <h4 class="modal-title">Agregar área</h4>
+    </div>
+    <form>
+        <div class="modal-body"  >
+            <table class="tablaModal">
+                <tr>
+                    <td>Foto:</td>
+                    <td>{# INSERTAR MACRO DE IMAGENES 
+                        <div class="subirFoto"><a class="eliminarChico"></a></div>
+                        <div class="float">
+                            [% import 'subirImagen.twig' as subirImagen%]
+                            [[ subirImagen.input() ]]
+                        </div>
+                        <div class="clear"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nombre:</td>
+                    <td><input type="text" ng-model="form.nombreArea" ng-init="form.nombreArea = '' " name="nombreArea"></td>
+                </tr>
+                <tr>
+                    <td>Descripción:</td>
+                    <td><input type="hidden" ng-model="form.section" ng-init="form.section = 'agregarArea' "  name="section" >
+                        <textarea ng-model="form.descripcionArea" ng-init="form.descripcionArea = '' " name="descripcionArea"></textarea></td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <div class="">
+                <button type="button" class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+                <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_AREAS ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+            </div>
+        </div>
+    </form><!-- form -->
+</div>
+#}

@@ -1,0 +1,93 @@
+{# empty Twig template #}
+<script src="[[ paths.PATH_CKEDITOR ]]ckeditor.js"></script>
+<script src="[[ paths.PATH_JS ]]editorsInc.js"></script>
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()"></button>
+        <h4 class="modal-title">Agregar noticia</h4>
+    </div>
+
+    <form>
+        <div class="modal-body"  >
+
+
+            <table class="tablaModal">
+                <tr>
+                    <td>Foto:</td>
+                    <td>{# INSERTAR MACRO DE IMAGENES #}
+                        <div class="subirFoto"><!--<a class="eliminarChico"></a>-->
+                            <div class="">
+                                [% import 'subirImagen.twig' as subirImagen%]
+                                [[ subirImagen.input() ]]
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><p class="textoAclaracion">Nota: la imagen original debe tener 225px de ancho x 170px de alto.</p></td>
+                </tr>
+                <tr>
+                    <td>Título:</td>
+                    <td><input maxlength="80" type="text" ng-model="form.tituloNoticia" ng-init="form.tituloNoticia = '' " name="nombreNoticia">
+                        <p class="textoAclaracion">Nota: El título tiene un límite de 80 caracteres.</p></td>
+                </tr>
+                <tr>
+                    <td>Bajada:</td>
+                    <td>
+                        <textarea maxlength="200" ng-model="form.descripcionNoticia" ng-init="form.descripcionNoticia = '' " name="descripcionNoticia"></textarea>
+                        <p class="textoAclaracion">Nota: La bajada tiene un límite de 200 caracteres.</p>
+                        <input type="hidden" ng-model="form.section" ng-init="form.section = 'agregarNoticia' "  name="section" ></td>
+                </tr>
+                <tr>
+                    <td>Fuente:</td>
+                    <td><input type="text" ng-model="form.fuenteNoticia" ng-init="form.fuenteNoticia = '' "  name="fuenteNoticia"></td>
+                </tr>
+                <tr>
+                    <td>Cuerpo:</td>
+                    <td><textarea data-ng-model="form.cuerpoNoticia" data-ck-editor  ng-init="form.cuerpoNoticia = '' " id="cuerpoNoticia" name="cuerpoNoticia"></textarea></td>
+                </tr>
+                <tr>
+                    <td>Fecha:</td>
+                    <td><input type="text" ng-model="form.fechaNoticia" ng-init="form.fechaNoticia = '' " name="fechaNoticia"><span class="textoAclaracion">(dd/mm/aaaa)</span></td>
+                </tr>
+
+                <tr>
+                    <td>Área:</td>
+                    <td>
+                        <select ng-model="form.idArea" ng-init="form.idArea = '' " name="idArea" class="selectAdmin">
+                            <option value="">Seleccione un Área</option>
+                            [% for datoArea in areas %]
+                            <option value="[[ datoArea.idArea ]]">[[ datoArea.nombreArea ]]</option>
+                            [% endfor %]
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Etiquetas</td>
+                    <td> 
+                        <div>
+                            <tags-input ng-model="form.tags">
+                                <auto-complete source="loadTags($query)"></auto-complete>
+                            </tags-input>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <div class="">
+                <button type="button" class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+                <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+            </div>
+        </div>
+    </form><!-- form -->
+</div>
+{#
+<script>
+    $(document).ready(function() {
+        $('textarea#cuerpoNoticia').ckeditor();
+    });
+    </script>
+#}

@@ -1,0 +1,29 @@
+
+<div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" ng-click="cancel()"></button>
+      <h4 class="modal-title">Galería de imágenes</h4>
+    </div>
+
+
+        <div class="modal-body"  >
+
+			<div class="subirFoto">
+				<table class="tablaModal">
+				    		[% import 'subirImagenes.twig' as subirImagenes%]
+							[[ subirImagenes.input(urlUpload) ]]
+							<div class="clear"></div>
+				</table>   
+			</div>
+			<input type="hidden" ng-model="form.id" ng-init="form.id = '[[id]]' "/>
+			<input type="hidden" ng-model="form.carpeta" ng-init="form.carpeta = 'evento' "/>
+			<input type="hidden" ng-model="form.section" ng-init="form.section = 'agregarFotos' "  name="section" >
+			</table>	
+		</div>
+		<div class="modal-footer">
+				<div class="">
+		      		<button type="button" class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+		      		<button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+		      	</div>
+		 </div>
+</div>

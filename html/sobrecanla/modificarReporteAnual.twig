@@ -1,0 +1,64 @@
+{# empty Twig template #}
+<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()"></button>
+        <h4 class="modal-title">Editar Reporte Anual</h4>
+    </div>
+    <div class="modal-body"  >
+        [% autoescape false %]
+        [% set id = dataArray.idReporteAnual %]
+
+        <form>
+            <table class="tablaModal">
+                <tr>
+                    <td>Archivo:</td>
+                    <td>
+                        <div ng-show="!subirImagen">
+                            [% if dataArray.archivoReporteAnual is defined and dataArray.archivoReporteAnual is not empty%]
+                            [% set imagenSubida = paths.PATH_IMAGES ~ "sobrecanla/" ~ dataArray.archivoReporteAnual %]
+                            <div class="minArchivoCargado">
+                                <img class="thumb" src="[[ paths.PATH_IMAGES ]]tapaPdf.jpg{#[[imagenSubida]]#}"/>
+                                <button type="button" ng-click="eliminarDinamico('[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?language=[[ lang ]]', formImagen)" class="eliminarChico eliminarFoto"></button>
+                            </div>
+                            <p>[[dataArray.archivoReporteAnual]]</p>
+                            <input type="hidden" ng-model="formImagen.id"  ng-init="formImagen.id = '[[id]]'"/>
+                            <input type="hidden" ng-model="formImagen.image"  ng-init="formImagen.image = '[[imagenSubida]]' "/>
+                            <input type="hidden" ng-model="formImagen.section" ng-init="formImagen.section = 'eliminarImagenReporteAnual'"/>
+                            
+                            [% else %]
+                            <div ng-init="subirImagen = true"></div>
+                            [% endif%]
+                        </div>
+							{# INSERTAR MACRO DE IMAGENES #}
+                        <div ng-show="subirImagen">	
+                            [% import 'subirImagen.twig' as subirImagen%]
+                            [[ subirImagen.input(imagenSubida, idImagen, lang) ]]
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Título:</td>
+                    <td><input type="hidden" ng-model="form.idReporteAnual"  ng-init="form.idReporteAnual = '[[id]]'"/>
+                        <input type="text" ng-model="form.tituloReporteAnual" ng-init="form.tituloReporteAnual = '[[dataArray.tituloReporteAnual]]' " name="tituloReporteAnual"  value="[[dataArray.tituloReporteAnual]]"></td>
+                </tr>
+                <tr>
+                    <td>Fecha:</td>
+                    <td> <input type="text" ng-model="form.fechaManualReporteAnual" ng-init="form.fechaManualReporteAnual = '[[dataArray.fechaManualReporteAnual]]' "  name="fechaManualReporteAnual" value="[[dataArray.fechaManualReporteAnual]]"  placeholder="dd/mm/AAAA">
+                    <span class="textoAclaracion">Nota: la fecha no se muestra, sólo sirve para ordenar. El formato debe ser: dd/mm/AAAA</span></td>
+                </tr>
+            </table>
+            <input type="hidden" ng-model="form.section" ng-init="form.section = 'modificarReporteAnual' "  name="section" >
+            <input type="hidden" ng-model="form.archivo" ng-init="form.archivo = '[[dataArray.archivoReporteAnual]]' "  name="archivo" >
+            [% endautoescape  %]
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+                <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+            </div>
+        </form>
+
+    </div>

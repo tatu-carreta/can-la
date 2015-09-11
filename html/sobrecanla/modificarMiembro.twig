@@ -1,0 +1,153 @@
+{# empty Twig template #}
+<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    id = [[dataArray.idMiembro]];
+    </script>
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h4 class="modal-title">Editar Miembro</h4>
+        </div>
+        <div class="modal-body">
+            <form enctype="multipart/form-data" action="[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?language=[[ lang ]]" method="post">
+                <table class="tablaModal">
+                    <tr>
+                        <td>Foto:</td>
+                        <td>
+                            [% set id = dataArray.idMiembro %]
+                            <div ng-show="!subirImagen">
+                                [% if dataArray.logoMiembro is defined and dataArray.logoMiembro is not empty%]
+                                [% set imagenSubida = paths.PATH_IMAGES ~ "sobrecanla/" ~ dataArray.logoMiembro %]
+                                <div class="minArchivoCargado">
+                                    <img class="thumb" src="[[paths.PATH_IMAGES_SOBRECANLA]][[ dataArray.logoMiembro ]]"/>
+                                    <button type="button" ng-click="eliminarDinamico('[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?language=[[ lang ]]', formImagen)" class="eliminarChico eliminarFoto"></button>
+                                </div>
+                                <p>[[datoNoticia.imagenNoticia]]</p>
+                                <input type="hidden" ng-model="formImagen.id"  ng-init="formImagen.id = '[[id]]'"/>
+                                <input type="hidden" ng-model="formImagen.image"  ng-init="formImagen.image = '[[archivoSubido]]' "/>
+                                <input type="hidden" ng-model="formImagen.section" ng-init="formImagen.section = 'eliminarImagenMiembro'"/>
+
+                                [% else %]
+                                <div ng-init="subirImagen = true"></div>
+                                [% endif%]
+                            </div>
+						{# INSERTAR MACRO DE IMAGENES #}
+                            <div ng-show="subirImagen">	
+                                [% import 'subirImagen.twig' as subirImagen%]
+                                [[ subirImagen.input(imagenSubida, idImagen, lang) ]]
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><p class="textoAclaracion">Nota: la imagen original no debe tener más de 200px de ancho (no importa el alto).</p></td>
+                    </tr>
+                    <td>Nombre:</td>
+                    <td><input type="text" ng-model="form.nombreMiembro" ng-init="form.nombreMiembro = '[[dataArray.nombreMiembro]]' " name="nombreMiembro"  value="[[dataArray.nombreMiembro]]"></td>
+                    </tr>
+                    <tr>
+                        <td>Sitio web:</td>
+                        <td><input type="text" ng-model="form.urlMiembro" ng-init="form.urlMiembro = '[[dataArray.urlMiembro]]' "  name="urlMiembro" value="[[dataArray.urlMiembro]]"></td>
+                    </tr>
+                    <tr>
+                        <td>Representante:</td>
+                        <td>
+                            <input type="text" ng-model="form.representanteMiembro" ng-init="form.representanteMiembro = '[[dataArray.representanteMiembro]]' " name="representanteMiembro" value="[[dataArray.representanteMiembro]]"></td>
+                    </tr>
+                    {#<tr>
+                        <td>Dirección:</td>
+                        <td><input type="text" ng-model="form.direccionMiembro" ng-init="form.direccionMiembro = '[[dataArray.direccionMiembro]]' "  name="direccionMiembro" value="[[dataArray.direccionMiembro]]"></td>
+                    </tr>#}
+                    <tr>
+                        <td>Descripción:</td>
+                        <td><textarea maxlength="380" ng-model="form.descripcionMiembro" ng-init="form.descripcionMiembro = '[[dataArray.descripcionMiembro]]' " name="descripcionMiembro" >[[dataArray.descripcionMiembro]]</textarea></td>
+                    </tr>
+                    <tr>
+                        <td>País:</td>
+                        <td>
+                            <select class="selectAdmin" ng-model="form.idPais" ng-init="form.idPais = '[[ dataArray.idPais ]]' " name="idPais">
+                                <option value="">Seleccione un País</option>
+                                [% for datoPais in paises %]
+                                <option value="[[ datoPais.idPais ]]">[[ datoPais.nombrePais ]]</option>
+                                [% endfor %]
+                            </select></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="hidden" ng-model="form.idMiembro"  ng-init="form.idMiembro = '[[id]]'"/>
+                            <input type="hidden" ng-model="form.section" ng-init="form.section = 'modificarMiembro' "  name="section" >
+                            <input type="hidden" ng-model="form.archivo" ng-init="form.archivo = '[[dataArray.logoMiembro]]' "  name="archivo" >
+                            <input type="hidden" name="section" value="modificarMiembro">
+                        </td>
+                    </tr>
+                </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button"  class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+            <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+        </div>
+    </form>  		
+</div>
+
+{# empty Twig template 
+<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()"></button>
+        <h4 class="modal-title">Editar Miembro</h4>
+    </div>
+    <div class="modal-body"  >
+        [% autoescape false %]
+        [% set id = dataArray.idMiembro %]
+        <div ng-show="!subirImagen">
+            [% if dataArray.logoMiembro is defined and dataArray.logoMiembro is not empty%]
+            [% set imagenSubida = paths.PATH_IMAGES ~ "sobrecanla/" ~ dataArray.logoMiembro %]
+            <img class="thumb" src="[[imagenSubida]]"/>
+            <input type="hidden" ng-model="formImagen.id"  ng-init="formImagen.id = '[[id]]'"/>
+            <input type="hidden" ng-model="formImagen.image"  ng-init="formImagen.image = '[[imagenSubida]]' "/>
+            <input type="hidden" ng-model="formImagen.section" ng-init="formImagen.section = 'eliminarImagenMiembro'"/>
+            <button type="button" ng-click="eliminarDinamico('[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?language=[[ lang ]]', formImagen)">Quitar imagen actual</button>
+            [% else %]
+            <div ng-init="subirImagen = true"></div>
+            [% endif%]
+        </div>
+{# INSERTAR MACRO DE IMAGENES 
+        <div ng-show="subirImagen">	
+            [% import 'subirImagen.twig' as subirImagen%]
+            [[ subirImagen.input(imagenSubida, idImagen, lang) ]]
+        </div>
+        <form enctype="multipart/form-data" action="[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?language=[[ lang ]]" method="post">
+            <input type="hidden" ng-model="form.idMiembro"  ng-init="form.idMiembro = '[[id]]'"/>
+            <input type="text" ng-model="form.nombreMiembro" ng-init="form.nombreMiembro = '[[dataArray.nombreMiembro]]' " name="nombreMiembro"  value="[[dataArray.nombreMiembro]]">
+            <input type="text" ng-model="form.urlMiembro" ng-init="form.urlMiembro = '[[dataArray.urlMiembro]]' "  name="urlMiembro" value="[[dataArray.urlMiembro]]">
+            <p class="textoAclaracion">Nota: la url debe tener el siguiente formato http://www.can-la.org o http://can-la.org</p>
+            <input type="text" ng-model="form.representanteMiembro" ng-init="form.representanteMiembro = '[[dataArray.representanteMiembro]]' " name="representanteMiembro" value="[[dataArray.representanteMiembro]]">
+            <input type="text" ng-model="form.direccionMiembro" ng-init="form.direccionMiembro = '[[dataArray.direccionMiembro]]' "  name="direccionMiembro" value="[[dataArray.direccionMiembro]]">
+            <textarea ng-model="form.descripcionMiembro" ng-init="form.descripcionMiembro = '[[dataArray.descripcionMiembro]]' " name="descripcionMiembro" >[[dataArray.descripcionMiembro]]</textarea>
+            País:
+            <select ng-model="form.idPais" ng-init="form.idPais = '[[ dataArray.idPais ]]' " name="idPais">
+                <option value="">Seleccione un País</option>
+                [% for datoPais in paises %]
+                <option value="[[ datoPais.idPais ]]">[[ datoPais.nombrePais ]]</option>
+                [% endfor %]
+            </select>
+
+            <input type="hidden" ng-model="form.section" ng-init="form.section = 'modificarMiembro' "  name="section" >
+            <input type="hidden" name="section" value="modificarMiembro">
+            [% endautoescape  %]
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btnOutline cancelar marginR btn-default"  ng-click="cancel()">Cancelar</button>
+                <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+            </div>
+        </form>
+
+    </div>
+#}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" ng-app="app" lang="[[ lang ]]">
+    <head>
+        <meta charset="UTF-8">
+        <title>Can Latinoamerica</title>
+        <meta name="description" content="">
+        <link rel="shortcut icon" href="[[ paths.PATH_IMAGES ]]favicon.png" type="image/png">
+
+        {#<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />#}
+
+
+        <link href="[[ paths.PATH_CSS ]]bootstrap.css" rel="stylesheet">
+        <link href="[[ paths.PATH_CKEDITOR ]]contents.css" rel="stylesheet">
+        <link href="[[ paths.PATH_CSS]]modal.css" rel="stylesheet">
+        <link href="[[ paths.PATH_CSS]]estilos.css" rel="stylesheet">
+        <link href="[[ paths.PATH_CSS]]ng-tags-input.css" rel="stylesheet">
+		<link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic' rel='stylesheet' type='text/css'>
+
+        {#<link href="[[ paths.PATH_CSS ]]estilos.css?id=[[rand]]" rel="stylesheet">#}
+
+        <script type="text/javascript">
+            [% autoescape false %]
+            var PATH_PHP = [[ pathsJson.PATH_PHP ]];
+            var PATH_CONTROLLER = [[ pathsJson.PATH_CONTROLLER ]];
+            var PATH_HOME = [[ pathsJson.PATH_HOME ]];
+            var PATH_IMAGES = [[ pathsJson.PATH_IMAGES ]];
+            [% endautoescape %]
+        </script> 
+
+        </head>
+        <body ng-cloak>
+            
+            <div id="fb-root"></div>
+            <script>
+            window.fbAsyncInit = function() {
+            FB.init({appId: '102236749812802', status: true, cookie: true,
+            xfbml: true});
+            };
+            (function() {
+            var e = document.createElement('script'); e.async = true;
+            e.src = document.location.protocol +
+            '//connect.facebook.net/en_US/all.js';
+            document.getElementById('fb-root').appendChild(e);
+            }());
+            </script>

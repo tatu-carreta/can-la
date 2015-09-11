@@ -1,0 +1,26 @@
+{# empty Twig template #}
+<section>
+    <div class="contentInterno">
+        <div class="contenedor">
+            <p class="ubicacion"><a href="[[paths.PATH_HOME]][% if(localhost) %]?language=[[ lang ]][% else %][[ lang ]][% endif %]">[[ texts.inicio ]]</a>|<span class="seccion">[[texts.sobre_canla]]</span>|<span class="seccion">[[texts.objetivos]]</span></p>
+
+            <h2>[[texts.objetivos]]</h2>
+            [% if(datoSobreCanla.idSobreCanla) %]
+            [% if(perfil == 1) %]
+            <div class="divBtnAgregar">
+                <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdmin.php?seccion=modificarObjetivo&idSobreCanla=[[ datoSobreCanla.idSobreCanla ]]&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/modificarObjetivo/[[ datoSobreCanla.idSobreCanla ]]/admin[% endif %]" class="btn editar marginR">Editar</a>
+            </div>
+            [% endif %]
+            <div class="textoEditado">
+                [% autoescape false %]
+                [[ datoSobreCanla.cuerpoSobreCanla ]]
+                [% endautoescape %]
+            </div>
+            [% else %]
+            [% if(perfil == 1) %]
+            <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdmin.php?seccion=agregarObjetivo&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/agregarObjetivo/admin[% endif %]" class="btn agregar">Agregar Objetivos</a>
+            [% endif %]
+            [% endif %]
+        </div>
+    </div>
+</section>

@@ -1,0 +1,110 @@
+
+
+<script type="text/javascript">
+    urlSubmit = '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php?seccion=agregarEvento&language=[[ lang ]]';
+    urlUploadImage = '[[ paths.PATH_PHP ]]upload.php?section=comunicaciones';
+    controladorModel = '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php';
+    section = 'listadoEventos';
+    lang = '[[ lang ]]';
+    </script>
+
+    <section>
+        <div class="contentInterno">
+            <div class="contenedor">
+                <p class="ubicacion"><a href="[[paths.PATH_HOME]][% if(localhost) %]?language=[[ lang ]][% else %][[ lang ]][% endif %]">[[ texts.inicio ]]</a>|<span class="seccion">[[ texts.comunicaciones ]]</span>|<span class="seccion">[[ texts.agenda ]]</span></p>
+                <h2>[[ texts.agenda ]]</h2>
+
+                [% if(perfil == 1) %]
+                <div class="divBtnAgregar" ng-controller="modalDefault" ng-init="init('[[paths.PATH_CONTROLLER]]comunicaciones/controladorAdmin.php?seccion=agregarEvento', 'imgController')">
+                    <a class="btn agregar" ng-click="open()" >Agregar Evento</a>
+                </div>
+                [% endif %]
+
+                <div ng-controller="mainController" ng-init="init()">
+                    <ul class="noticiasDestacadas">
+                        <li ng-repeat="data in dataArray.eventosDestacados | startFrom:currentPage*pageSize | limitTo:pageSize track by data.idEvento"  class="logItem unidadNoticiaDestacada" ng-class="['bgAzul', 'bgVerde'][$index % 2]">
+                            <a href="[% if(localhost) %][[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=evento&nombreEventoUrl={{data.nombreEventoUrl}}&language=[[lang]][% else %][[ paths.PATH_HOME ]][[ lang ]]/evento/{{ data.nombreEventoUrl }}[% endif %]">
+                                <div class="divImg">
+                                    <div class="coverI"></div>
+                                    <img class="fotoNoticias" alt="{{data.tituloEvento}}" src="[[ paths.PATH_IMAGES_COMUNICACIONES ]]{{ data.imagenEvento }}">
+                                </div>
+                                {#<div ng-show="data.imagenEvento">
+                                </div>#}
+                                <div class="textoIndiceNoticias">
+                                    <p class="fecha">{{data.fechaInicioEvento}}</p>
+                                    <h2>{{data.tituloEvento}}</h2>
+                                    <p>{{ data.descripcionEvento }}</p>
+
+                                    [% if(perfil == 1) %]
+                                    <div class="comboEliminarEditar">
+                                        <div class="float marginR" ng-controller="mainController" >
+                                            <div class="success" ng-show="alertSuccess">{{alertSuccess}}</div>
+                                            <div class="error" ng-show="alertError">{{alertError}}</div>
+                                            <a class="btnOutline eliminar" type="button" ng-click="eliminarGenerico(data.idEvento, '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php', 'borrarEvento', '¿Está seguro que desea borrar el evento?' )">Borrar Evento</a>
+                                        </div>
+                                        <div class="float" ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=modificarEvento&idEvento='+data.idEvento+'&language=[[ lang ]]', 'imgController')">
+                                            <a class="btn editar marginR" ng-click="open()">Editar</a>
+                                        </div>
+                                        <div ng-show="data.destacadoEvento !='t'" class="float" ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=destacarEvento&idEvento='+data.idEvento+'&language=[[ lang ]]', 'imgController')">
+                                            <a class="btn editar marginR" ng-click="open()">Destacar</a>
+                                        </div>
+
+                                        <button  ng-show="data.destacadoEvento == 't'" class="btnOutline eliminar" ng-click="eliminarGenerico(data.idEvento, '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php', 'quitarDestacadoEvento', '¿Quitar el evento de destacados?' )"> Quitar destacado</button>
+
+                                    </div>
+                                    [% endif %]
+                                    <div class="clear"></div>
+                                </div>
+                            </a>
+                            <div class="clear"></div>
+                        </li>
+                        <div class="clear"></div>
+                    </ul>
+                    <div class="clear"></div>
+                    <ul >
+                        <li ng-repeat="data in dataArray.eventos | startFrom:currentPage*pageSize | limitTo:pageSize track by data.idEvento"  class="logItem unidadIndiceNoticia">
+                            <a href="[% if(localhost) %][[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=evento&nombreEventoUrl={{data.nombreEventoUrl}}&language=[[lang]][% else %][[ paths.PATH_HOME ]][[ lang ]]/evento/{{ data.nombreEventoUrl }}[% endif %]">
+                                <img class="fotoNoticias" alt="{{data.tituloEvento}}" src="[[ paths.PATH_IMAGES_COMUNICACIONES ]]{{ data.imagenEvento }}">
+                                {#<div ng-show="data.imagenEvento">
+                                </div>#}
+                                <div class="textoIndiceNoticias">
+                                    <h2>{{data.tituloEvento}}</h2>
+                                    <p class="fecha">{{data.fechaInicioEvento}}</p>
+                                    <p>{{ data.descripcionEvento }}</p>
+
+                                    [% if(perfil == 1) %]
+                                    <div class="comboEliminarEditar">
+                                        <div class="float marginR" ng-controller="mainController" >
+                                            <div class="success" ng-show="alertSuccess">{{alertSuccess}}</div>
+                                            <div class="error" ng-show="alertError">{{alertError}}</div>
+                                            <a class="btnOutline eliminar" type="button" ng-click="eliminarGenerico(data.idEvento, '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php', 'borrarEvento', '¿Está seguro que desea borrar el evento?' )">Borrar Evento</a>
+                                        </div>
+                                        <div class="float marginR" ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=modificarEvento&idEvento='+data.idEvento+'&language=[[ lang ]]', 'imgController')">
+                                            <a class="btn editar" ng-click="open()">Editar</a>
+                                        </div>
+                                        <div ng-show="data.destacadoEvento !='t'" class="float" ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=destacarEvento&idEvento='+data.idEvento+'&language=[[ lang ]]', 'imgController')">
+                                            <a class="btn editar marginR" ng-click="open()">Destacar</a>
+                                        </div>
+
+                                        <button  ng-show="data.destacadoEvento == 't'" class="btnOutline eliminar" ng-click="eliminarGenerico(data.idEvento, '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php', 'quitarDestacadoEvento', '¿Quitar el evento de destacados?' )"> Quitar destacado</button>
+
+                                    </div>
+                                    [% endif %]
+                                    <div class="clear"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <div class="clear"></div>
+                    </ul>
+                    <div class="paginador" ng-show="dataArray.length > 0">
+                        <button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1" class="pagPrev">Previous</button>
+                        Página {{currentPage+1}}/{{numberOfPages()}}
+                        <button ng-disabled="currentPage >= dataArray.length/pageSize - 1" ng-click="currentPage=currentPage+1" class="pagNext">Next</button>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>

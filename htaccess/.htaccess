@@ -1,0 +1,45 @@
+#AddHandler x-httpd-php5 .php
+# 
+
+
+Options +FollowSymLinks  
+RewriteEngine On  
+
+RewriteBase /nuevo
+#IndexOptions +Charset=UTF-8
+RewriteCond %{SCRIPT_FILENAME} !-d  
+RewriteCond %{SCRIPT_FILENAME} !-f  
+
+RewriteRule ^(es|en)/?$ index.php?language=$1 [L]
+RewriteRule ^((es|en)/login)/?$ controller/usuarios/controladorAdmin.php?seccion=login&language=$1 [L]
+RewriteRule ^((es|en)/logout)/?$ controller/usuarios/controladorAdmin.php?seccion=logout&language=$1 [L]
+RewriteRule ^((es|en)/idioma)/?$ controller/usuarios/controladorAdmin.php?seccion=idioma&language=$1 [L]
+RewriteRule ^((es|en)/sobrecanla/(.*))/?$ controller/sobrecanla/controladorAdmin.php?seccion=$3&language=$1 [L]
+
+RewriteRule ^((es|en)/area/(.*))/?$ controller/areas/controladorAdmin.php?seccion=area&area=$3&language=$1 [L]
+RewriteRule ^((es|en)/areas/(.*))/?$ controller/areas/controladorAdmin.php?seccion=areas&language=$1 [L]
+RewriteRule ^((es|en)/publicaciones/(.*))/?$ controller/publicaciones/controladorAdmin.php?seccion=$3&language=$1 [L]
+RewriteRule ^((es|en)/comunicaciones/(.*))/?$ controller/comunicaciones/controladorAdmin.php?seccion=$3&language=$1 [L]
+RewriteRule ^((es|en)/contacto/(.*))/?$ controller/contacto/controladorAdmin.php?seccion=$3&language=$1 [L]
+
+RewriteRule ^((es|en)/tag/(.*))/?$ controller/etiquetas/controladorAdmin.php?seccion=mostrarEtiqueta&nombreEtiqueta=$3&language=$1 [L]
+
+RewriteRule ^((es|en)/evento/(.*))/?$ controller/comunicaciones/controladorAdmin.php?seccion=evento&nombreEventoUrl=$3&language=$1 [L]
+RewriteRule ^((es|en)/noticia/(.*))/?$ controller/comunicaciones/controladorAdmin.php?seccion=noticia&nombreNoticiaUrl=$3&language=$1 [L]
+RewriteRule ^((es|en)/notaPrensa/(.*))/?$ controller/comunicaciones/controladorAdmin.php?seccion=notaPrensa&notaPrensaUrl=$3&language=$1 [L]
+
+RewriteRule ^((es|en)/modificarObjetivo/(.*)/admin)/?$ controller/sobrecanla/controladorAdmin.php?seccion=modificarObjetivo&idSobreCanla=$3&language=$1 [L]
+RewriteRule ^((es|en)/modificarCanInternacional/(.*)/admin)/?$ controller/sobrecanla/controladorAdmin.php?seccion=modificarCanInternacional&idSobreCanla=$3&language=$1 [L]
+RewriteRule ^((es|en)/modificarHistoria/(.*)/admin)/?$ controller/sobrecanla/controladorAdmin.php?seccion=modificarHistoria&idSobreCanla=$3&language=$1 [L]
+RewriteRule ^((es|en)/modificarReglamento/(.*)/admin)/?$ controller/sobrecanla/controladorAdmin.php?seccion=modificarReglamento&idSobreCanla=$3&language=$1 [L]
+
+RewriteRule ^([^/\.]+)/?$ php/$1.php? [L]
+
+
+ErrorDocument 404 http://can-la.org/nuevo
+
+
+
+
+
+

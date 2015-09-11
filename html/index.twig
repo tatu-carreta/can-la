@@ -1,0 +1,114 @@
+{# empty Twig template #}
+<div class="section">
+    <div class="contentHome">
+
+        <div class="contenedor">
+
+            <section class="slide">
+                <div class="mascaraSlide">
+                    <img src="[[ paths.PATH_IMAGES ]]mascaraSlide.png" alt="CAN LA">
+                </div>
+                <div class="flexslider">
+                    <ul class="slides">
+                        [% for dato in noticiasSlide %]
+                        <li>
+                            <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=noticia&nombreNoticiaUrl=[[ dato.nombreNoticiaUrl ]]&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/noticia/[[ dato.nombreNoticiaUrl ]][% endif %]">
+                                <img alt="[[ dato.tituloNoticia ]]" src="[% if(dato.imagenSlideNoticia is not null) %][[ paths.PATH_IMAGES_COMUNICACIONES ]][[ dato.imagenSlideNoticia ]][% else %][[ paths.PATH_IMAGES ]]slide1.jpg[% endif %]" />
+                                <p class="flex-caption">[[ dato.tituloNoticia ]]<br></p>
+                            </a>
+                        </li>
+                        [% endfor %]
+                        [% for dato in notasSlide %]
+                        <li>
+                            <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=nota-prensa&notaPrensaUrl=[[ dato.notaPrensaUrl ]]&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/nota-prensa/[[ dato.notaPrensaUrl ]][% endif %]">
+                                <img alt="[[ dato.tituloNotaPrensa ]]" src="[% if(dato.imagenSlideNotaPrensa is not null) %][[ paths.PATH_IMAGES_COMUNICACIONES ]][[ dato.imagenSlideNotaPrensa ]][% else %][[ paths.PATH_IMAGES ]]slide1.jpg[% endif %]" />
+                                <p class="flex-caption">[[ dato.tituloNotaPrensa ]]<br></p>
+                            </a>
+                        </li>
+                        [% endfor %]
+                        [% for dato in eventosSlide %]
+                        <li>
+                            <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=evento&nombreEventoUrl=[[ dato.nombreEventoUrl ]]&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/evento/[[ dato.nombreEventoUrl ]][% endif %]">
+                                <img alt="[[ dato.tituloEvento ]]" src="[% if(dato.imagenSlideEvento is not null) %][[ paths.PATH_IMAGES_COMUNICACIONES ]][[ dato.imagenSlideEvento ]][% else %][[ paths.PATH_IMAGES ]]slide1.jpg[% endif %]" />
+                                <p class="flex-caption">[[ dato.tituloEvento ]]<br><span>[[ dato.lugarEvento ]], [[ dato.fechaInicioEvento|date('d/m/Y') ]]</span></p>
+                            </a>
+                        </li>
+                        [% endfor %]
+                    </ul>
+                </div>
+            </section>
+
+            <!-- abre carrousel de Á R E A S -->
+            <section class="areasTrabajo">
+                <h3>[[texts.areas_de_trabajo]]</h3>
+                <div class="slideAreasTrabajo">
+                    <ul class="ch-grid bxslider">
+                        [% autoescape false %]
+                        [% set i = 1 %]
+                        [% for area in areas %]
+                        <li>
+                            <div class="ch-item ch-img-[[ i ]]" style="background-image: url([[paths.PATH_IMAGES_AREAS]][[ area.imagenArea ]]) ; background-position: center; background-repeat: no-repeat ">
+                                <div class="ch-info">
+                                    <p><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_AREAS]]controladorAdmin.php?seccion=area&area=[[ area.nombreAreaUrl ]]&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/area/[[ area.nombreAreaUrl ]][% endif %]"><span>Ver más</span></a></p>
+                                </div>
+                            </div>
+                            <h2>[[ area.nombreArea ]]</h2>
+                        </li>
+                        [% set i = i + 1 %]
+                        [% if( i >= 7) %]
+                        [% set i = 1 %]
+                        [% endif %]
+                        [% endfor %]
+                        [% endautoescape %]
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </section>
+
+            <!-- abre A G E N D A S -->
+            <section class="agendaHome">
+				<h3>[[texts.agenda]]</h3>
+                {#<h3><a href="[% if (localhost) %][[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=agenda&language=[[ lang ]][% else %][[paths.PATH_HOME]][[ lang ]]/comunicaciones/agenda[% endif %]">[% if(texts) %][[texts.agenda]][% else %]Eventos[% endif %]</a></h3>#}
+                [% autoescape false %]
+                [% set i = 1 %]
+                [% for datoEvento in eventos %]
+                <div class="agendaCol [% if(i == 2) %]sinMargen[% endif %]">
+                    <a href="[% if(localhost) %][[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=evento&nombreEventoUrl=[[ datoEvento.nombreEventoUrl ]]&language=[[lang]][% else %][[ paths.PATH_HOME ]][[ lang ]]/evento/[[ datoEvento.nombreEventoUrl ]][% endif %]">
+                        <img src="[[ paths.PATH_IMAGES_COMUNICACIONES ]][[ datoEvento.imagenEvento ]]" alt="[[ datoEvento.tituloEvento ]]">
+                        <p class="fecha">del [[ datoEvento.fechaInicioEvento|date('d/m/Y') ]] al [[ datoEvento.fechaFinEvento|date('d/m/Y') ]]</p>
+                        <h4>[[ datoEvento.tituloEvento ]]</h4>
+                        {#<p>
+                            [% autoescape false %]
+                            [[ datoEvento.descripcionEvento ]]
+                            [% endautoescape %]
+                        </p>#}
+                    </a>
+                </div>
+                [% set i = i + 1 %]
+                [% endfor %]
+                [% endautoescape %]
+                <div class="clear"></div>
+            </section>
+
+            <!-- abre N O T I C I A S" -->
+            <section>
+                <h3>[[texts.noticias]]</h3>
+                <div class="noticiasHome">
+                    <ul class="noticiaH bxsliderNoticias">
+                        [% for datoNoticia in noticias %]
+                        <li>
+                            <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=noticia&nombreNoticiaUrl=[[ datoNoticia.nombreNoticiaUrl ]]&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/noticia/[[ datoNoticia.nombreNoticiaUrl ]][% endif %]">
+                                <img src="[[ paths.PATH_IMAGES_COMUNICACIONES ]][[ datoNoticia.imagenNoticia ]]" alt="[[ datoNoticia.tituloNoticia ]]">
+                                <p class="fecha">[[ datoNoticia.fechaNoticia|date('d/m/Y') ]]</p>
+                                <h4>[[ datoNoticia.tituloNoticia ]]</h4>
+                                <p>[[ datoNoticia.descripcionNoticia ]]</p>
+                            </a>
+                        </li>
+                        [% endfor %]
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+    </div><!--contenedor externo-->
+</div>

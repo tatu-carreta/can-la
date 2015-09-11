@@ -1,0 +1,32 @@
+<!doctype html>
+<html ng-app="app">
+  <head>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
+    <script src="../js/module.js"></script>
+    <script src="../js/controllerImages.js"></script>
+    <script src="../js/controllerPdf.js"></script>
+    <script src="../js/angular-file-upload.js"></script>
+    <script src="../js/directives.js"></script>
+   
+    <link src="../css/modal.css" rel="stylesheet">
+  </head>
+  <body>
+
+<div ng-controller="modalImages">
+
+
+    <button class="btn btn-default" ng-click="open()">Subir Imágenes</button>
+    <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+</div>
+
+<div ng-controller="modalPdf">
+
+
+    <button class="btn btn-default" ng-click="open()">Subir Pdf</button>
+    <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+</div>
+  </body>
+</html>

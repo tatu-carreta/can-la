@@ -1,0 +1,131 @@
+
+
+<script type="text/javascript">
+    urlSubmit = '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php?seccion=agregarNoticia&language=[[ lang ]]';
+    urlUploadImage = '[[ paths.PATH_PHP ]]upload.php?section=comunicaciones';
+    controladorModel = '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php';
+    section = 'listadoNoticias';
+    lang = '[[ lang ]]';
+    etiquetas = 'etiquetasNoticia';
+    </script>
+    <section>
+        <div class="contentInterno">
+            <div class="contenedor" id="up">
+                <p class="ubicacion"><a href="[[paths.PATH_HOME]][% if(localhost) %]?language=[[ lang ]][% else %][[ lang ]][% endif %]">[[ texts.inicio ]]</a>|<span class="seccion">[[ texts.comunicaciones ]]</span>|<span class="seccion">[[ texts.noticias ]]</span></p>
+                <h2>[[ texts.noticias ]]</h2>
+
+                [% if(perfil == 1) %]
+                <div class="divBtnAgregar" ng-controller="modalDefault" ng-init="init('[[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=agregarNoticia', 'imgController')">
+                    <a class="btn agregar" ng-click="open()" >Agregar Noticia</a>
+                </div>
+                [% endif %]
+
+                [% autoescape  false  %]
+
+                <div ng-controller="mainController" ng-init="init()"> {# aca se llama al listado #}
+                {#noticias destacadas#}
+                        <ul class="noticiasDestacadas">
+                            <li ng-repeat="data in dataArray.noticiasDestacadas  | startFrom:currentPage*pageSize | limitTo:pageSize track by data.idNoticia" class="logItem unidadNoticiaDestacada" ng-class="['bgAzul', 'bgVerde'][$index % 2]">
+                                <a href="[% if(localhost) %][[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=noticia&nombreNoticiaUrl={{data.nombreNoticiaUrl}}&language=[[lang]][% else %][[ paths.PATH_HOME ]][[ lang ]]/noticia/{{ data.nombreNoticiaUrl }}[% endif %]">
+                                    <div class="divImg">
+                                        <div class="coverI"></div>
+                                        <img class="fotoNoticias" alt="{{data.tituloNoticia}}" src="[[ paths.PATH_IMAGES_COMUNICACIONES ]]{{data.imagenSlideNoticia}}">
+                                    </div>
+                                    <div class="textoIndiceNoticias">
+                                        <p class="fecha">{{data.fechaNoticia}}</p>
+                                        <h2>{{data.tituloNoticia}}</h2>
+                                        <p>{{data.descripcionNoticia}}</p>
+                                    {#<p>Fuente: {{data.fuenteNoticia}}</p>#}
+                                        [% if(perfil == 1) %]
+                                        <div class="comboEliminarEditar">
+                                            <div class="float marginR" ng-controller="mainController" >
+                                                <div class="success " ng-show="alertSuccess">{{alertSuccess}}</div>
+                                                <div class="error" ng-show="alertError">{{alertError}}</div>
+                                                <a class="btnOutline eliminar" type="button" ng-click="eliminarGenerico(data.idNoticia, '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php', 'borrarNoticia', '¿Está seguro que desea borrar la noticia?' )">Borrar</a>
+                                            </div>
+                                            <div class="float" ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=modificarNoticia&idNoticia='+data.idNoticia+'&language=[[ lang ]]', 'imgController')">
+                                                <a class="btn editar marginR" ng-click="open()"> Editar</a>
+                                            </div>
+
+                                            <div ng-show="data.destacadoNoticia !='t'" class="float" ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=destacarNoticia&idNoticia='+data.idNoticia+'&language=[[ lang ]]', 'imgController')">
+                                                <a class="btn editar marginR" ng-click="open()"> Destacar</a>
+                                            </div>
+
+                                            <button  ng-show="data.destacadoNoticia == 't'" class="btnOutline eliminar" ng-click="eliminarGenerico(data.idNoticia, '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php', 'quitarDestacadoNoticia', '¿Quitar la noticia de destacados?' )"> Quitar destacado</button>
+
+
+                                        </div>
+                                        [% endif %]
+                                        <div class="clear"></div>
+                                    {#<div ng-init="fetchTags(data.idNoticia)" class="divTags">
+                                        <ul class="tag-list">
+                                            <li class="tag-item" ng-repeat="tag in tags | tagFilter: data.idNoticia  track by tag.nombreEtiqueta">
+                                                <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER ]]etiquetas/controladorAdmin.php?seccion=mostrarEtiqueta&nombreEtiqueta={{tag.nombreEtiquetaUrl}}&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/tag/{{ tag.nombreEtiquetaUrl }}[% endif %]">{{tag.nombreEtiqueta}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>#}
+                                    </div>
+                                </a>
+                                <div class="clear"></div>
+                            </li>
+                            <div class="clear"></div>
+                        </ul>
+                        <div class="clear"></div>
+
+                    {#noticias normales#}
+                        <ul>
+                            <li ng-repeat="data in dataArray.noticias  | startFrom:currentPage*pageSize | limitTo:pageSize track by data.idNoticia" class="logItem unidadIndiceNoticia">
+                                <a href="[% if(localhost) %][[paths.PATH_CONTROLLER_COMUNICACIONES]]controladorAdmin.php?seccion=noticia&nombreNoticiaUrl={{data.nombreNoticiaUrl}}&language=[[lang]][% else %][[ paths.PATH_HOME ]][[ lang ]]/noticia/{{ data.nombreNoticiaUrl }}[% endif %]">
+                                    <img class="fotoNoticias" alt="{{data.tituloNoticia}}" src="[[ paths.PATH_IMAGES_COMUNICACIONES ]]{{data.imagenNoticia}}">
+                                    <div class="textoIndiceNoticias">
+                                        <p class="fecha">{{data.fechaNoticia}}</p>
+                                        <h2>{{data.tituloNoticia}}</h2>
+                                        <p class="bajada">{{data.descripcionNoticia}}</p>
+                                    {#<p>Fuente: {{data.fuenteNoticia}}</p>#}
+                                        [% if(perfil == 1) %]
+                                        <div class="comboEliminarEditar">
+                                            <div class="float marginR" ng-controller="mainController" >
+                                                <div class="success " ng-show="alertSuccess">{{alertSuccess}}</div>
+                                                <div class="error" ng-show="alertError">{{alertError}}</div>
+                                                <a class="btnOutline eliminar" type="button" ng-click="eliminarGenerico(data.idNoticia, '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php', 'borrarNoticia', '¿Está seguro que desea borrar la noticia?' )">Borrar</a>
+                                            </div>
+                                            <div class="float" ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=modificarNoticia&idNoticia='+data.idNoticia+'&language=[[ lang ]]', 'imgController')">
+                                                <a class="btn editar marginR" ng-click="open()"> Editar</a>
+                                            </div>
+
+                                            <div ng-show="data.destacadoNoticia !='t'" class="float" ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php?seccion=destacarNoticia&idNoticia='+data.idNoticia+'&language=[[ lang ]]', 'imgController')">
+                                                <a class="btn editar marginR" ng-click="open()"> Destacar</a>
+                                            </div>
+
+                                            <button  ng-show="data.destacadoNoticia == 't'" class="btnOutline eliminar" ng-click="eliminarGenerico(data.idNoticia, '[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php', 'quitarDestacadoNoticia', '¿Quitar la noticia de destacados?' )"> Quitar destacado</button>
+
+
+                                        </div>
+                                        [% endif %]
+                                        <div class="clear"></div>
+                                        <div ng-init="fetchTags(data.idNoticia)" class="divTags">
+                                            <ul class="tag-list">
+                                                <li class="tag-item" ng-repeat="tag in tags | tagFilter: data.idNoticia  track by tag.nombreEtiqueta">
+                                                    <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER ]]etiquetas/controladorAdmin.php?seccion=mostrarEtiqueta&nombreEtiqueta={{tag.nombreEtiquetaUrl}}&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/tag/{{ tag.nombreEtiquetaUrl }}[% endif %]">{{tag.nombreEtiqueta}}</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="clear"></div>
+                            </li>
+                            <div class="clear"></div>
+                        </ul>
+
+                        <div class="paginador" ng-show="dataArray.noticias.length > 0">
+                            <a href="#up"  ng-hide="currentPage == 0" ng-click="currentPage=currentPage-1" class="pagPrev">Previous</a>
+                            <span>Página {{currentPage+1}}/{{numberOfPages( dataArray.noticias.length )}}</span>
+                            <a href="#up"  ng-hide="currentPage >= dataArray.noticias.length/pageSize - 1" ng-click="currentPage=currentPage+1" class="pagNext">Next</a>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    [% endautoescape %]
+                </div>
+            </div>
+        </section>
+

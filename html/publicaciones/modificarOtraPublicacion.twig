@@ -1,0 +1,41 @@
+{# empty Twig template #}
+<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()"></button>
+        <h4 class="modal-title">Editar Reporte Anual</h4>
+    </div>
+    <div class="modal-body"  >
+        [% autoescape false %]
+        [% set id = datoOtraPublicacion.idOtraPublicacion %]
+
+        <form>
+            <table class="tablaModal">
+                <tr>
+                    <td>Título:</td>
+                    <td><input type="hidden" ng-model="form.idOtraPublicacion"  ng-init="form.idOtraPublicacion = '[[id]]'"/>
+                        <input type="text" ng-model="form.tituloOtraPublicacion" ng-init="form.tituloOtraPublicacion = '[[datoOtraPublicacion.tituloOtraPublicacion]]' " name="tituloOtraPublicacion"  value="[[datoOtraPublicacion.tituloOtraPublicacion]]"></td>
+                </tr>
+                <tr>
+                    <td>Enlace:</td>
+                    <td><input type="text" ng-model="form.urlOtraPublicacion" ng-init="form.urlOtraPublicacion = '[[ datoOtraPublicacion.urlOtraPublicacion ]]' "  name="urlOtraPublicacion" value="[[ datoOtraPublicacion.urlOtraPublicacion ]]"></td>
+                </tr>
+                <tr>
+                    <td>Descripción:</td>
+                    <td>
+                        <textarea ng-model="form.descripcionOtraPublicacion" ng-init="form.descripcionOtraPublicacion = '[[ datoOtraPublicacion.descripcionOtraPublicacion ]]' " name="descripcionOtraPublicacion">[[ datoOtraPublicacion.descripcionOtraPublicacion ]]</textarea></td>
+                </tr>
+            </table>
+            <input type="hidden" ng-model="form.section" ng-init="form.section = 'modificarOtraPublicacion' "  name="section" >
+            [% endautoescape  %]
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+                <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_PUBLICACIONES ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+            </div>
+        </form>
+
+    </div>

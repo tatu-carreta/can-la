@@ -1,0 +1,79 @@
+
+
+<script type="text/javascript">
+    urlSubmit = '[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?seccion=agregarMiembro&language=[[ lang ]]';
+    urlUploadImage = '[[ paths.PATH_PHP ]]upload.php?section=[[section]]';
+    controladorModel = '[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php';
+    lang = '[[ lang ]]';
+    section = 'listadoMiembros';
+    </script>
+
+
+
+    <section>
+        <div class="contentInterno">
+            <div class="contenedor" id="up">
+                <p class="ubicacion"><a href="[[paths.PATH_HOME]][% if(localhost) %]?language=[[ lang ]][% else %][[ lang ]][% endif %]">[[ texts.inicio ]]</a>|<span class="seccion">[[texts.sobre_canla]]</span>|<span class="seccion">[[ texts.miembros ]]</span></p>
+                <h2>[[ texts.miembros ]]</h2>
+
+                <div ng-controller="mainController" ng-init="init()">
+                    <div ng-init="paises()"></div>
+                    <div class="divBtnAgregar" ng-controller="modalDefault" ng-init="init('[[paths.PATH_CONTROLLER]]sobrecanla/controladorAdmin.php?seccion=agregarMiembro', 'imgController')">
+                        <form action="[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdmin.php" method="get">
+                            <input type="hidden" name="seccion" value="miembros">
+                            <input type="hidden" name="language" value="[[ lang ]]">
+                            <select ng-change="reiniciarPaginador()" ng-model="search.nombrePais" name="idPais" ng-options="pais as pais for pais in paises " class="marginR">
+                                <option value="">Todos los países</option>
+                            </select>
+                            <input type="text" placeholder="Buscar por nombre" value="Buscar" ng-change="reiniciarPaginador()"  ng-model="search.nombreMiembro" class="buscar marginR">
+                            [% if(perfil == 1) %]
+                            <a class="btn agregar" ng-click="open()" >Agregar Miembro</a>
+                            [% endif %]
+                        </form>
+                    </div>
+
+                    [% autoescape  false  %]
+
+                    <ul>
+                        <li ng-repeat="data in dataArray | filter:search:allowNullValue | startFrom:currentPage*pageSize | limitTo:pageSize  track by data.idMiembro" class="logItem unidaddeContenido miembro">
+                            <div class="divLogoMiembro">
+                                <img alt="{{data.nombreMiembro}}" src="[[ paths.PATH_IMAGES_SOBRECANLA ]]{{data.logoMiembro}}">
+                            </div>
+                            <div class="divNombreMiembro">
+                                <h4>{{data.nombreMiembro}}</h4>
+                                <p>País: {{ data.nombrePais }}</p>
+                            </div>
+                            <div class="divDatosMiembro">
+                                <p>{{data.descripcionMiembro}}</p>
+                                <p class="sitioWeb">Sitio Web: <a href="{{data.urlMiembro}}">{{data.urlMiembro}}</a></p>
+                                <p>Representante: <strong>{{ data.representanteMiembro }}</strong></p>
+                                [% if(perfil == 1) %]
+                                <div class="comboEliminarEditar">
+                                    <div class="float marginR" ng-controller="mainController" >
+                                        <div class="success " ng-show="alertSuccess">{{alertSuccess}}</div>
+                                        <div class="error" ng-show="alertError">{{alertError}}</div>
+                                        <button class="btnOutline eliminar" type="button" ng-click="eliminarGenerico(data.idMiembro, '[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php', 'borrarMiembro', '¿Está seguro que desea borrar este miembro?' )">Borrar</button>
+                                    </div>
+                                    <div class="float" ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdmin.php?seccion=modificarMiembro&idMiembro='+data.idMiembro+'&language=[[ lang ]]', 'imgController')">
+                                        <a class="btn editar" ng-click="open()">Editar</a>
+                                    </div>
+                                </div>
+                                [% endif %]
+                                <div class="clear"></div>
+                            </div>
+                            <div class="clear"></div>
+                        </li>
+                    </ul>
+                    <div class="paginador" ng-show="(dataArray | filter:search:allowNullValue).length > 0">
+                        <a href="#up" ng-hide="currentPage == 0" ng-click="currentPage=currentPage-1" class="pagPrev">Previous</a>
+                        <span>Página {{currentPage+1}}/{{numberOfPages( (dataArray | filter:search:allowNullValue).length )}}</span>
+                        <a href="#up" ng-hide="currentPage >= (dataArray | filter:search:allowNullValue).length/pageSize - 1" ng-click="currentPage=currentPage+1" class="pagNext">Next</a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                [% endautoescape %]
+            </div>
+        </div>
+    </section>
+

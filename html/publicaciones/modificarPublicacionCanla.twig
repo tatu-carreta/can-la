@@ -1,0 +1,85 @@
+{# empty Twig template #}
+<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    id = [[datoPublicacionCanla.idPublicacionCanla]];
+    </script>
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h4 class="modal-title">Editar Publicacion</h4>
+        </div>
+        <div class="modal-body"  >
+            [% autoescape false %]
+            [% set id = datoPublicacionCanla.idPublicacionCanla %]
+
+            <form>
+                <table class="tablaModal">
+                    <tr>
+                        <td>Archivo:</td>
+                        <td>
+                            <div ng-show="!subirImagen">
+                                [% if datoPublicacionCanla.archivoPublicacionCanla is defined and datoPublicacionCanla.archivoPublicacionCanla is not empty%]
+                                [% set imagenSubida = paths.PATH_IMAGES ~ "publicaciones/" ~ datoPublicacionCanla.archivoPublicacionCanla %]
+                                <div class="minArchivoCargado">
+                                    <img class="thumb" src="[[paths.PATH_IMAGES]]tapaPdf.jpg"/>
+                                    <button type="button" ng-click="eliminarDinamico('[[ paths.PATH_CONTROLLER_PUBLICACIONES ]]controladorAdminModel.php?language=[[ lang ]]', formImagen)" class="eliminarChico eliminarFoto"></button>
+                                </div>
+                                <p>[[datoPublicacionCanla.archivoPublicacionCanla]]</p>
+                                <input type="hidden" ng-model="formImagen.id"  ng-init="formImagen.id = '[[id]]'"/>
+                                <input type="hidden" ng-model="formImagen.image"  ng-init="formImagen.image = '[[imagenSubida]]' "/>
+                                <input type="hidden" ng-model="formImagen.section" ng-init="formImagen.section = 'eliminarArchivoPublicacionCanla'"/>
+
+                                [% else %]
+                                <div ng-init="subirImagen = true"></div>
+
+                                [% endif%]
+                            </div>
+							{# INSERTAR MACRO DE IMAGENES #}
+                            <div ng-show="subirImagen">	
+                                [% import 'subirImagen.twig' as subirImagen%]
+                                [[ subirImagen.input(imagenSubida, idImagen, lang) ]]
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Título:</td>
+                        <td><input type="hidden" ng-model="form.idPublicacionCanla"  ng-init="form.idPublicacionCanla = '[[id]]'"/>
+                            <input type="text" ng-model="form.tituloPublicacionCanla" ng-init="form.tituloPublicacionCanla = '[[datoPublicacionCanla.tituloPublicacionCanla]]' " name="tituloBoletin"  value="[[datoPublicacionCanla.tituloPublicacionCanla]]"></td>
+                    </tr>
+                    <tr>
+                        <td>Área:</td>
+                        <td>
+                            <select ng-model="form.idArea" ng-init="form.idArea = '[[ datoPublicacionCanla.area.idArea ]]' " name="idArea">
+                                <option value="">Seleccione un Área</option>
+                                [% for datoArea in areas %]
+                                <option value="[[ datoArea.idArea ]]">[[ datoArea.nombreArea ]]</option>
+                                [% endfor %]
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Etiqueta:</td>
+                        <td>
+                            <div ng-init="fetchTags()">
+                                <tags-input ng-model="form.tags">
+                                    <auto-complete source="loadTags($query)"></auto-complete>
+                                </tags-input>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" ng-model="form.section" ng-init="form.section = 'modificarPublicacionCanla' "  name="section" >
+                <input type="hidden" ng-model="form.archivo" ng-init="form.archivo = '[[datoPublicacionCanla.archivoPublicacionCanla]]' "  name="archivo" >
+                [% endautoescape  %]
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+                    <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_PUBLICACIONES ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+                </div>
+            </form>
+
+        </div>

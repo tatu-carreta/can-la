@@ -1,0 +1,20 @@
+{# empty Twig template #}
+<seccion>
+    <div class="contentInterno">
+        <div class="contenedor">
+            <p class="ubicacion"><a href="[[paths.PATH_HOME]][% if(localhost) %]?language=[[ lang ]][% else %][[ lang ]][% endif %]">[[ texts.inicio ]]</a>|<span class="seccion">[[texts.sobre_canla]]</span>|<span class="seccion">[[texts.can_internacional]]</span></p>
+            <h2>Editar CAN Internacional</h2>
+            <form id="formularioHistoria" action="[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?language=[[ lang ]]" method="post" >
+                <textarea id="modificarCanInternacional" name="cuerpoSobreCanla">[[ datoSobreCanla.cuerpoSobreCanla ]]</textarea>
+                <input type="hidden" name="section" value="modificarSobreCanla" />
+                <input type="hidden" name="idSobreCanla" value="[[ datoSobreCanla.idSobreCanla ]]" />
+                <input type="hidden" name="tipoSobreCanla" value="[[ datoSobreCanla.tipoSobreCanla ]]">
+
+                <div class="comboBtnDerecha">
+                    <input type="button" value="Cancelar" onclick="window.history.back()" class="btnOutline btn-default cancelar marginR" >
+                    <input type="submit" value="Publicar" class="btn btn-primary publicar" />
+                </div>
+            </form>
+        </div>
+    </div>
+</seccion>

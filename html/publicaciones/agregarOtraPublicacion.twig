@@ -1,0 +1,39 @@
+{# empty Twig template #}
+
+
+<div class="modal-content">
+	<div class="modal-header">
+	  <button type="button" class="close" ng-click="cancel()"></button>
+	  <h4 class="modal-title">Agregar Publicación</h4>
+	</div>
+
+		<div class="modal-body"  >
+			<table class="tablaModal">
+		     		<tr>
+						<td>Título:</td>
+						<td>
+							<input type="text" ng-model="form.tituloOtraPublicacion" ng-init="form.tituloOtraPublicacion = '' " name="tituloOtraPublicacion" >
+				    		<input type="hidden" ng-model="form.section" ng-init="form.section = 'agregarOtraPublicacion' "  name="section" >
+				    	</td>
+					</tr>
+					<tr>
+						<td>Enlace:</td>
+						<td><input type="text" ng-model="form.urlOtraPublicacion" ng-init="form.urlOtraPublicacion = '' "  name="urlOtraPublicacion"></td>
+					</tr>
+					<tr>
+						<td>Descripción:</td>
+						<td>
+				        	<textarea ng-model="form.descripcionOtraPublicacion" ng-init="form.descripcionOtraPublicacion = '' " name="descripcionOtraPublicacion"></textarea>
+				    		<input type="hidden" ng-model="form.section" ng-init="form.section = 'agregarOtraPublicacion' "  name="section" >
+				    	</td>
+					</tr>
+					<tr>
+			</table>
+		</div>
+	   	
+	   	<div class="modal-footer">
+	      			<button type="button" class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+	      			<button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_PUBLICACIONES ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+   		</div>
+   	 <!--- form --->
+</div>

@@ -1,0 +1,58 @@
+
+
+
+<script type="text/javascript">
+    urlSubmit = '[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?seccion=agregarReporteAnual&language=[[ lang ]]';
+    urlUploadImage = '[[ paths.PATH_PHP ]]upload.php?section=[[section]]';
+    controladorModel = '[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php';
+    lang = '[[ lang ]]';
+    section = 'listadoReportes';
+    </script>
+
+
+
+    <section>
+        <div class="contentInterno">
+            <div class="contenedor">
+                <p class="ubicacion"><a href="[[paths.PATH_HOME]][% if(localhost) %]?language=[[ lang ]][% else %][[ lang ]][% endif %]">[[ texts.inicio ]]</a>|<span class="seccion">[[texts.sobre_canla]]</span>|<span class="seccion">[[texts.reporte_anual]]</span></p>
+                <h2>[[texts.reporte_anual]]</h2>
+
+                [% if(perfil == 1) %]
+                <div class="divBtnAgregar" ng-controller="modalDefault" ng-init="init('[[paths.PATH_CONTROLLER]]sobrecanla/controladorAdmin.php?seccion=agregarReporteAnual', 'pdfController')">
+                    <a class="btn agregar" ng-click="open()" >Agregar Reporte</a>
+                </div>
+                [% endif %]
+
+                [% autoescape  false  %]
+
+                <div ng-controller="mainController" ng-init="init()">
+                    <ul class="listaPDF">
+                        <li ng-repeat="data in dataArray track by data.idReporteAnual" class="logItem itemListaPDF">
+                            <div class="infoArchivoPDF">
+                                <img alt="{{data.tituloReporteAnual}}" src="[[ paths.PATH_IMAGES ]]tapaPdf.jpg">
+                                <h3>{{data.tituloReporteAnual}}</h3>
+                                <a class="descargarPDF" href="[[ paths.PATH_IMAGES_SOBRECANLA ]]{{data.archivoReporteAnual}}">[[texts.descargar]]</a>
+                                {#<p class="fecha">{{data.fechaManualReporteAnual}}</p>#}
+                            </div>
+                            [% if(perfil == 1) %]
+                            <div class="comboBtnDerecha">
+                                <div class="float marginR" ng-controller="mainController" >
+                                    <div class="success " ng-show="alertSuccess">{{alertSuccess}}</div>
+                                    <div class="error" ng-show="alertError">{{alertError}}</div>
+                                    <button class="btnOutline eliminar" type="button" ng-click="eliminarGenerico(data.idReporteAnual, '[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php', 'borrarReporteAnual', '¿Está seguro que desea borrar el reporte?' )">Borrar</button>
+                                </div>
+                                <div class="float" ng-controller="modalDefault" ng-init="init('[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdmin.php?seccion=modificarReporteAnual&idReporteAnual='+data.idReporteAnual+'&language=[[ lang ]]', 'pdfController')">
+                                    <a class="btn editar" ng-click="open()">Editar</a>
+                                </div>
+                            </div>
+                            [% endif %]
+                        </li>
+                    </ul>
+                    <div class="clear"></div>
+
+                </div>
+
+                [% endautoescape %]
+            </div>
+        </div>
+    </section>

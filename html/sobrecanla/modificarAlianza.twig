@@ -1,0 +1,73 @@
+{# empty Twig template #}
+<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()"></button>
+        <h4 class="modal-title">Editar Alianza</h4>
+    </div>
+    <div class="modal-body"  >
+        [% autoescape false %]
+        [% set id = dataArray.idAlianza %]
+
+        <form>
+            <table class="tablaModal">
+                <tr>
+                    <td>Foto:</td>
+                    <td>
+                        <div class="subirFoto"><!--<a class="eliminarChico"></a>-->
+                            <div ng-show="!subirImagen">
+                                [% if dataArray.logoAlianza is defined and dataArray.logoAlianza is not empty%]
+                                [% set imagenSubida = paths.PATH_IMAGES ~ "sobrecanla/" ~ dataArray.logoAlianza %]
+                                <div class="minArchivoCargado">
+                                    <img class="thumb" src="[[imagenSubida]]"/>
+                                    <button type="button" ng-click="eliminarDinamico('[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?language=[[ lang ]]', formImagen)" class="eliminarChico eliminarFoto"></button>
+                                </div>
+                                <input type="hidden" ng-model="formImagen.id"  ng-init="formImagen.id = '[[id]]'"/>
+                                <input type="hidden" ng-model="formImagen.image"  ng-init="formImagen.image = '[[imagenSubida]]' "/>
+                                <input type="hidden" ng-model="formImagen.section" ng-init="formImagen.section = 'eliminarImagenAlianza'"/>
+                                
+                                [% else %]
+                                <div ng-init="subirImagen = true"></div>
+                                [% endif%]
+                            </div>
+								{# INSERTAR MACRO DE IMAGENES #}
+                            <div ng-show="subirImagen">	
+                                [% import 'subirImagen.twig' as subirImagen%]
+                                [[ subirImagen.input(imagenSubida, idImagen, lang) ]]
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nombre:</td>
+                    <td><input type="hidden" ng-model="form.idAlianza"  ng-init="form.idAlianza = '[[id]]'"/>
+                        <input type="text" ng-model="form.nombreAlianza" ng-init="form.nombreAlianza = '[[dataArray.nombreAlianza]]' " name="nombreAlianza"  value="[[dataArray.nombreAlianza]]"></td>
+                </tr>
+                <tr>
+                    <td>URL:</td>
+                    <td> <input type="text" ng-model="form.urlAlianza" ng-init="form.urlAlianza = '[[dataArray.urlAlianza]]' "  name="urlAlianza" value="[[dataArray.urlAlianza]]"></td>
+                </tr>
+                <tr>
+                    <td>Categoría</td>
+                    <td><select required ng-model="form.categoriaAlianza" name="categoriaAlianza" ng-init="form.categoriaAlianza = '[[dataArray.categoriaAlianza]]' ">
+                            <option value="">Seleccione una categoría</option>
+                            <option value="1">Principales</option>
+                            <option value="2">Secundarios</option>
+                        </select></td>
+                </tr>
+            </table>
+            <input type="hidden" ng-model="form.section" ng-init="form.section = 'modificarAlianza' "  name="section" >
+            <input type="hidden" ng-model="form.archivo" ng-init="form.archivo = '[[dataArray.logoAlianza]]' "  name="archivo" >
+            [% endautoescape  %]
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+                <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+            </div>
+        </form>
+
+    </div>

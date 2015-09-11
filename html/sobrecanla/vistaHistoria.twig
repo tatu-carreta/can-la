@@ -1,0 +1,25 @@
+{# empty Twig template #}
+<section>
+    <div class="contentInterno">
+        <div class="contenedor">
+            <p class="ubicacion"><a href="[[paths.PATH_HOME]][% if(localhost) %]?language=[[ lang ]][% else %][[ lang ]][% endif %]">[[ texts.inicio ]]</a>|<span class="seccion">[[texts.sobre_canla]]</span>|<span class="seccion">[[texts.historia]]</span></p>
+            <h2>[[texts.historia]]</h2>
+            [% if(datoSobreCanla.idSobreCanla) %]
+            [% if(perfil == 1) %]
+            <div class="divBtnAgregar">
+                <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdmin.php?seccion=modificarHistoria&idSobreCanla=[[ datoSobreCanla.idSobreCanla ]]&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/modificarHistoria/[[ datoSobreCanla.idSobreCanla ]]/admin[% endif %]" class="btn editar marginR">Editar</a>
+            </div>
+            [% endif %]
+            <div class="textoEditado">
+                [% autoescape false %]
+                [[ datoSobreCanla.cuerpoSobreCanla ]]
+                [% endautoescape %]
+            </div>
+            [% else %]
+            [% if(perfil == 1) %]
+            <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdmin.php?seccion=agregarHistoria&language=[[ lang ]][% else %][[ paths.PATH_HOME ]][[ lang ]]/agregarHistoria/admin[% endif %]" class="btn agregar">Agregar Historia</a>
+            [% endif %]
+            [% endif %]
+        </div>
+    </div>
+</section>

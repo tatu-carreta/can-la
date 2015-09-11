@@ -1,0 +1,77 @@
+{# empty Twig template #}
+<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()"></button>
+        <h4 class="modal-title">Editar ECO</h4>
+    </div>
+    <div class="modal-body"  >
+        [% autoescape false %]
+        [% set id = datoEco.idEco %]
+
+        <form>
+            <table class="tablaModal">
+                <tr>
+                    <td>Archivo:</td>
+                    <td>
+                        <div ng-show="!subirImagen">
+                            [% if datoEco.archivoEco is defined and datoEco.archivoEco is not empty%]
+                            [% set imagenSubida = paths.PATH_IMAGES ~ "comunicaciones/" ~ datoEco.archivoEco %]
+                            <div class="minArchivoCargado">
+                                <img class="thumb" src="[[paths.PATH_IMAGES]]tapaPdf.jpg"/>
+                                <button type="button" ng-click="eliminarDinamico('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php?language=[[ lang ]]', formImagen)" class="eliminarChico eliminarFoto"></button>
+                            </div>
+                            <input type="hidden" ng-model="formImagen.id"  ng-init="formImagen.id = '[[id]]'"/>
+                            <input type="hidden" ng-model="formImagen.image"  ng-init="formImagen.image = '[[imagenSubida]]' "/>
+                            <input type="hidden" ng-model="formImagen.section" ng-init="formImagen.section = 'eliminarArchivoEco'"/>
+
+                            [% else %]
+                            <div ng-init="subirImagen = true"></div>
+                            [% endif%]
+                        </div>
+							{# INSERTAR MACRO DE IMAGENES #}
+                        <div ng-show="subirImagen">	
+                            [% import 'subirImagen.twig' as subirImagen%]
+                            [[ subirImagen.input(imagenSubida, idImagen, lang) ]]
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Título:</td>
+                    <td><input type="hidden" ng-model="form.idEco"  ng-init="form.idEco = '[[id]]'"/>
+                        <input type="text" ng-model="form.tituloEco" ng-init="form.tituloEco = '[[datoEco.tituloEco]]' " name="tituloEco"  value="[[datoEco.tituloEco]]"></td>
+                </tr>
+            </table>
+            <input type="hidden" ng-model="form.section" ng-init="form.section = 'modificarEco' "  name="section" >
+            <input type="hidden" ng-model="form.archivo" ng-init="form.archivo = '[[datoEco.archivoEco]]' "  name="archivo" >
+            [% endautoescape  %]
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+                <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+            </div>
+        </form>
+
+    </div>
+
+{# empty Twig template 
+<seccion>
+    <h1>MODIFICAR Eco Español</h1>
+    <form enctype="multipart/form-data" id="formularioEco" action="[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php?language=[[ lang ]]" method="post" >
+        <input type="text" name="tituloEco" value="[[ datoEco.tituloEco ]]">
+        [% if(datoEco.archivoEco is not null) %]
+        <a class="borrarArchivo" href="[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdmin.php" data="borrarArchivoEco" id="[[ datoEco.idEco ]]">Borrar Archivo</a>
+        <img style="width: 100px;height: 100px;" alt="[[ datoEco.tituloEco ]]" src="[[ paths.PATH_IMAGES_COMUNICACIONES ]][[ datoEco.archivoEco ]]">
+        [% else %]
+        <input type="file" name="archivoEco" accept="application/pdf">
+        [% endif %]
+        <input type="hidden" name="section" value="modificarEco" />
+        <input type="hidden" name="idEco" value="[[ datoEco.idEco ]]" />
+        <input type="button" value="Cancelar" onclick="window.history.back()">
+        <input type="submit" value="Publicar"/>
+    </form>
+</seccion>
+#}

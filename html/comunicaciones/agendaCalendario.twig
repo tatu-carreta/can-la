@@ -1,0 +1,64 @@
+<link href='[[ paths.PATH_FULLCALENDAR ]]fullcalendar/fullcalendar.css' rel='stylesheet' />
+<link href='[[ paths.PATH_FULLCALENDAR ]]fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='[[ paths.PATH_FULLCALENDAR ]]lib/jquery.min.js'></script>
+<script src='[[ paths.PATH_FULLCALENDAR ]]lib/jquery-ui.custom.min.js'></script>
+<script src='[[ paths.PATH_FULLCALENDAR ]]fullcalendar/fullcalendar.min.js'></script>
+<script>
+
+            $(document).ready(function() {
+
+                var date = new Date();
+                var d = date.getDate();
+                var m = date.getMonth();
+                var y = date.getFullYear();
+                $('#calendar').fullCalendar({
+                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miercoles',
+                                'Jueves', 'Viernes', 'Sábado'],
+                    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                    buttonText:
+                    {
+                        prev:     ' ◄ ',
+                        next:     ' ► ',
+                        prevYear: ' &lt;&lt; ',
+                        nextYear: ' &gt;&gt; ',
+                        today:    'hoy',
+                    },
+                    header: {
+                        rigth: 'prev,next today',
+                        center: 'title',
+                        left: 'none'
+                    },
+                            editable: false,
+                            events: [
+                            [% for datoEvento in eventos %]
+                    {
+                    title: '[[ datoEvento.tituloEvento ]]',
+                            start: new Date([[ datoEvento.fechaInicioEvento | date("Y") ]], [[ datoEvento.fechaInicioEvento | date("m") ]] - 1, [[ datoEvento.fechaInicioEvento | date("d") ]]),
+                            end: new Date([[ datoEvento.fechaFinEvento | date("Y") ]], [[ datoEvento.fechaFinEvento | date("m") ]] - 1, [[ datoEvento.fechaFinEvento | date("d") ]]),
+                            url: 'http://google.com/'
+                    },
+                            [% endfor %]
+                    ]
+                });
+            });
+
+    </script>
+    <style>
+
+            body {
+                margin-top: 40px;
+                text-align: center;
+                font-size: 14px;
+                font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+            }
+
+            #calendar {
+                width: 900px;
+                margin: 0 auto;
+            }
+
+        </style>
+
+        <div id='calendar'></div>

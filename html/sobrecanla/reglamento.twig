@@ -1,0 +1,21 @@
+{# empty Twig template #}
+<seccion>
+    <h1>REGLAMENTO</h1>
+    [% if(datoSobreCanla.idSobreCanla) %]
+    <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdmin.php?seccion=modificarObjetivo&idSobreCanla=[[ datoSobreCanla.idSobreCanla ]]&language=[[ lang ]][% else %][[ paths.PATH_HOME ]]modificarObjetivo/[[ datoSobreCanla.idSobreCanla ]]/[[ lang ]]/admin[% endif %]">Editar Objetivo</a>
+
+    <form action="[[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdminModel.php" method="post" onsubmit="return confirm('¿Está seguro que desea borrar la historia?')">
+        <input type="hidden" name="section" value="borrarSobreCanla">
+        <input type="hidden" name="idSobreCanla" value="[[ datoSobreCanla.idSobreCanla ]]">
+        <input type="submit" value="Borrar Historia">
+    </form>
+
+    <div>
+        [% autoescape false %]
+        [[ datoSobreCanla.cuerpoSobreCanla ]]
+        [% endautoescape %]
+    </div>
+    [% else %]
+        <a href="[% if(localhost) %][[ paths.PATH_CONTROLLER_SOBRECANLA ]]controladorAdmin.php?seccion=agregarHistoria&language=[[ lang ]][% else %][[ paths.PATH_HOME ]]agregarHistoria/[[ lang ]]/admin[% endif %]">Agregar Historia</a>
+    [% endif %]
+</seccion>

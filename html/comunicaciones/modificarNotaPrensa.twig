@@ -1,0 +1,106 @@
+{# empty Twig template #}
+<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    id = [[datoNotaPrensa.idNotaPrensa]];
+    </script>
+
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"></button>
+            <h4 class="modal-title">Editar nota de prensa</h4>
+        </div>
+        <div class="modal-body"  >
+            [% set id = datoNotaPrensa.idNotaPrensa %]
+
+            <form>
+                <table class="tablaModal">
+                    <tr>
+                        <td>Foto:</td>
+                        <td>
+                            <div class="subirFoto">
+                                <div ng-show="!subirImagen">
+                                    [% if datoNotaPrensa.imagenNotaPrensa is defined and datoNotaPrensa.imagenNotaPrensa is not empty%]
+                                    [% set imagenSubida = paths.PATH_IMAGES ~ "comunicaciones/" ~ datoNotaPrensa.imagenNotaPrensa %]
+                                    <div class="minArchivoCargado">
+                                        <img class="thumb" src="[[imagenSubida]]"/>
+                                        <button type="button" ng-click="eliminarDinamico('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php?language=[[ lang ]]', formImagen)" class="eliminarChico eliminarFoto"></button>
+                                    </div>
+                                    <input type="hidden" ng-model="formImagen.id"  ng-init="formImagen.id = '[[id]]'"/>
+                                    <input type="hidden" ng-model="formImagen.archivo"  ng-init="formImagen.archivo = '[[imagenSubida]]' "/>
+                                    <input type="hidden" ng-model="formImagen.section" ng-init="formImagen.section = 'eliminarImagenNotaPrensa'"/>
+
+                                    [% else %]
+                                    <div ng-init="subirImagen = true"></div>
+                                    [% endif%]
+                                </div>
+								{# INSERTAR MACRO DE IMAGENES #}
+                                <div ng-show="subirImagen">	
+                                    [% import 'subirImagen.twig' as subirImagen%]
+                                    [[ subirImagen.input(imagenSubida, idImagen, lang) ]]
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Título:</td>
+                        <td><input maxlength="80" type="text" ng-model="form.tituloNotaPrensa" ng-init="form.tituloNotaPrensa = '[[datoNotaPrensa.tituloNotaPrensa]]' " name="nombreNotaPrensa" value="[[datoNotaPrensa.tituloNotaPrensa]]">
+                            <p class="textoAclaracion">Nota: El título tiene un límite de 80 caracteres.</p></td>
+                    </tr>
+                    <tr>
+                        <td>Bajada:</td>
+                        <td>
+                            <textarea maxlength="200" ng-model="form.descripcionNotaPrensa" ng-init="form.descripcionNotaPrensa = '[[datoNotaPrensa.descripcionNotaPrensa]]' " name="descripcionNotaPrensa">[[datoNotaPrensa.descripcionNotaPrensa]]</textarea>
+                            <p class="textoAclaracion">Nota: La bajada tiene un límite de 200 caracteres.</p>
+                            <input type="hidden" ng-model="form.section" ng-init="form.section = 'modificarNotaPrensa' "  name="section" >
+                            <input type="hidden" ng-model="form.id"  ng-init="form.id = '[[id]]'"/>
+                            <input type="hidden" ng-model="form.archivo" ng-init="form.archivo = '[[datoNotaPrensa.imagenNotaPrensa]]' "  name="archivo" >
+                            <input type="hidden" ng-model="form.mostrar" ng-init="form.mostrar = '[[ mostrar ]]'" name="mostrar"></td>
+                    </tr>
+                    <tr>
+                        <td>Cuerpo:</td>
+                        <td><textarea data-ck-editor ng-model="form.cuerpoNotaPrensa" ng-init="form.cuerpoNotaPrensa = '[[datoNotaPrensa.cuerpoNotaPrensa]]' " name="cuerpoNotaPrensa">[[datoNotaPrensa.cuerpoNotaPrensa]]</textarea></td>
+                    </tr>
+                    <tr>
+                        <td>Fecha:</td>
+                        <td><input type="text" ng-model="form.fechaNotaPrensa" ng-init="form.fechaNotaPrensa = '[[datoNotaPrensa.fechaNotaPrensa]]' " name="fechaNotaPrensa" value="[[datoNotaPrensa.fechaNotaPrensa]]"><span class="textoAclaracion">(dd/mm/aaaa)</span></td>
+                    </tr>
+                    {#
+                    <tr>
+                        <td>Destacada:</td>
+                        <td><input ng-click="destacar()" type="checkbox" ng-model="form.destacado" ng-init="form.destacado = '[[datoNotaPrensa.destacadoNotaPrensa]]' " name="destacadoNotaPrensa" ng-checked="datoNotaPrensa.destacadoNotaPrensa != '' "/></td>
+                    </tr>
+                    #}
+                    <tr>
+                        <td>Área:</td>
+                        <td>
+                            <select class="selectAdmin" ng-model="form.idArea" ng-init="form.idArea = '[[ datoNotaPrensa.area.idArea ]]' " name="idArea">
+                                <option value="">Seleccione un Área</option>
+                                [% for datoArea in areas %]
+                                <option value="[[ datoArea.idArea ]]">[[ datoArea.nombreArea ]]</option>
+                                [% endfor %]
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Etiqueta:</td>
+                        <td>
+                            <div ng-init="fetchTags()">
+                                <tags-input ng-model="form.tags">
+                                    <auto-complete source="loadTags($query)"></auto-complete>
+                                </tags-input>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btnOutline cancelar marginR btn-default" ng-click="cancel()">Cancelar</button>
+            <button type="button" ng-click="submitForm('[[ paths.PATH_CONTROLLER_COMUNICACIONES ]]controladorAdminModel.php?language=[[ lang ]]', form)" class="btn publicar btn-primary" >Publicar</button>
+        </div>
+    </form>
+
+</div>
